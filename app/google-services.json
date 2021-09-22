@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "222492153410",
+    "project_id": "meditell-3a6d4",
+    "storage_bucket": "meditell-3a6d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222492153410:android:d1893f172378844ee6ffdb",
+        "android_client_info": {
+          "package_name": "com.jmm.brsap.meditell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222492153410-gfnlnb55fktr9op80vhrpf7fskla0p3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdV_ZyrmZ98rQu7MGJvBCdwwwECHoJbQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222492153410-gfnlnb55fktr9op80vhrpf7fskla0p3r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
