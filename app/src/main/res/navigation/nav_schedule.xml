@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_schedule"
+    app:startDestination="@id/selectScheduleDate">
+
+    <fragment
+        android:id="@+id/selectScheduleDate"
+        android:name="com.jmm.brsap.meditell.ui.schedule.SelectScheduleDate"
+        android:label="fragment_select_schedule_date"
+        tools:layout="@layout/fragment_select_schedule_date" >
+        <action
+            android:id="@+id/action_selectScheduleDate_to_createSchedule"
+            app:destination="@id/createSchedule" />
+    </fragment>
+    <fragment
+        android:id="@+id/createSchedule"
+        android:name="com.jmm.brsap.meditell.ui.schedule.CreateSchedule"
+        android:label="fragment_create_schedule"
+        tools:layout="@layout/fragment_create_schedule" >
+        <action
+            android:id="@+id/action_createSchedule_to_confirmSchedule"
+            app:destination="@id/confirmSchedule" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmSchedule"
+        android:name="com.jmm.brsap.meditell.ui.schedule.ConfirmSchedule"
+        android:label="fragment_confirm_schedule"
+        tools:layout="@layout/fragment_confirm_schedule" />
+</navigation>

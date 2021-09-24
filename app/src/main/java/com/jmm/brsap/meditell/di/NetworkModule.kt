@@ -1,5 +1,8 @@
 package com.jmm.brsap.meditell.di
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.jmm.brsap.meditell.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -9,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,9 +33,10 @@ object NetworkModule {
 
     }
 
+    @Provides
+    @Singleton
+    fun provideFirestoreDB():FirebaseFirestore{
+        return Firebase.firestore
+    }
 
-    /*@Provides
-    fun provideShoppingApiService(retrofit: Retrofit): ShoppingApiService {
-        return retrofit.create(ShoppingApiService::class.java)
-    }*/
 }

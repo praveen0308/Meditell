@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jmm.brsap.meditell">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -10,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Meditell">
+        <activity
+            android:name=".ui.schedule.CreateSchedule"
+            android:exported="true" />
+        <activity
+            android:name=".ui.ManageSchedule"
+            android:exported="true" />
         <activity
             android:name=".ui.interaction.AddNewInteraction"
             android:exported="true" />
