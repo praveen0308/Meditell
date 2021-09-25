@@ -9,6 +9,7 @@ import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.adapters.MenusAdapter
 import com.jmm.brsap.meditell.databinding.FragmentHomeBinding
 import com.jmm.brsap.meditell.model.ModelMenu
+import com.jmm.brsap.meditell.ui.schedule.ManageSchedule
 import com.jmm.brsap.meditell.util.BaseFragment
 import com.jmm.brsap.meditell.util.convertYMD2EMDY
 import com.jmm.brsap.meditell.util.getTodayDate
@@ -52,7 +53,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
 
     override fun onMenuClick(menuId: Int) {
         when(menuId){
-            0->{startActivity(Intent(requireActivity(),ManageSchedule::class.java))}
+            0->{startActivity(Intent(requireActivity(), ManageSchedule::class.java))}
         }
     }
 

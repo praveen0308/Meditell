@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.FragmentSplashScreenBinding
+import com.jmm.brsap.meditell.repository.UserPreferencesRepository.Companion.LOGIN_DONE
 import com.jmm.brsap.meditell.util.BaseFragment
+import com.jmm.brsap.meditell.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -19,6 +22,7 @@ import kotlinx.coroutines.runBlocking
 @AndroidEntryPoint
 class SplashScreen : BaseFragment<FragmentSplashScreenBinding>(FragmentSplashScreenBinding::inflate) {
 
+    private val viewModel by viewModels<LoginViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -30,7 +34,14 @@ class SplashScreen : BaseFragment<FragmentSplashScreenBinding>(FragmentSplashScr
     }
 
     private fun performNavigation() {
-        findNavController().navigate(SplashScreenDirections.actionSplashScreenToLogin())
+        viewModel.welcomeStatus.observe(viewLifecycleOwner,{
+            if (it==LOGIN_DONE){
+                findNavController().navigate(SplashScreenDirections.actionSplashScreenToMainDashboard())
+            }else{
+                findNavController().navigate(SplashScreenDirections.actionSplashScreenToLogin())
+            }
+        })
+
     }
 
     override fun subscribeObservers() {

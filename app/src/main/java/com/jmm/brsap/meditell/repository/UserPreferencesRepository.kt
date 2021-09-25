@@ -63,20 +63,6 @@ class UserPreferencesRepository @Inject constructor(
             pref
         }
 
-    val userRoleId: Flow<Int> = context.dataStore.data
-        .catch { exception ->
-            if (exception is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw exception
-            }
-        }
-        .map { preferences ->
-            // No type safety.
-            val pref = preferences[USER_ROLE_ID] ?: 0
-            pref
-        }
-
     val firstName: Flow<String> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
@@ -135,19 +121,13 @@ class UserPreferencesRepository @Inject constructor(
         }
     }
 
-    suspend fun updateUserRoleId(userRoleId: Int) {
-        context.dataStore.edit { preference ->
-            preference[USER_ROLE_ID] = userRoleId
-        }
-    }
 
     suspend fun clearUserInfo() {
         updateUserId("")
         updateUserName("")
-        updateUserRoleId(0)
         updateUserFirstName("")
         updateUserLastName("")
-        updateWelcomeStatus(1)
+        updateWelcomeStatus(0)
         delay(1000)
     }
 
@@ -158,8 +138,7 @@ class UserPreferencesRepository @Inject constructor(
         const val USER_PREFERENCES_NAME = "PocketMoney"
 
         const val NEW_USER = 0
-        const val ON_BOARDING_DONE = 1
-        const val LOGIN_DONE = 2
+        const val LOGIN_DONE = 1
 
 
 
@@ -168,8 +147,6 @@ class UserPreferencesRepository @Inject constructor(
 
         val USER_ID = stringPreferencesKey("user_id")
         val USER_NAME = stringPreferencesKey("user_name")
-        val USER_ROLE_ID = intPreferencesKey("user_role_id")
-
         val USER_FIRST_NAME = stringPreferencesKey("user_first_name")
         val USER_LAST_NAME = stringPreferencesKey("user_last_name")
     }

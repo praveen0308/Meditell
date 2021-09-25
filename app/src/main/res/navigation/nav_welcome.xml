@@ -12,11 +12,29 @@
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreen_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_welcome"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splashScreen_to_mainDashboard"
+            app:destination="@id/mainDashboard"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_welcome"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/login"
         android:name="com.jmm.brsap.meditell.ui.welcome.Login"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_mainDashboard"
+            app:destination="@id/mainDashboard" />
+    </fragment>
+    <activity
+        android:id="@+id/mainDashboard"
+        android:name="com.jmm.brsap.meditell.ui.welcome.MainDashboard"
+        android:label="activity_main_dashboard"
+        tools:layout="@layout/activity_main_dashboard" />
 </navigation>

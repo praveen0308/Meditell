@@ -16,7 +16,7 @@
             android:name=".ui.schedule.CreateSchedule"
             android:exported="true" />
         <activity
-            android:name=".ui.ManageSchedule"
+            android:name=".ui.schedule.ManageSchedule"
             android:exported="true" />
         <activity
             android:name=".ui.interaction.AddNewInteraction"
