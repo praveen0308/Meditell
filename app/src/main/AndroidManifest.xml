@@ -22,7 +22,7 @@
             android:name=".ui.interaction.AddNewInteraction"
             android:exported="true" />
         <activity
-            android:name=".ui.AddSchedule"
+            android:name=".ui.schedule.AddSchedule"
             android:exported="true" />
         <activity
             android:name=".ui.welcome.MainDashboard"
