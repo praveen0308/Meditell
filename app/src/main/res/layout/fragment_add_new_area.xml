@@ -31,6 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_area_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Area Name" />
@@ -49,12 +50,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_area_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Area Address" />
+            android:hint="Area Address"
+            android:lines="3"
+            android:gravity="start"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"

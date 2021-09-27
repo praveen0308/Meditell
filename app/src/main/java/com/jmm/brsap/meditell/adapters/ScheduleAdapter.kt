@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.databinding.TemplateScheduleItemBinding
 import com.jmm.brsap.meditell.model.Schedule
-import com.jmm.brsap.meditell.util.convertEpochTimeToDate
+import com.jmm.brsap.meditell.util.convertDMY2EMDY
 
 
 class ScheduleAdapter(private val mListener: ScheduleInterface) :
@@ -53,8 +53,13 @@ class ScheduleAdapter(private val mListener: ScheduleInterface) :
 
         fun bind(item: Schedule) {
             binding.apply {
-                tvScheduleDate.text = convertEpochTimeToDate(item.date.seconds)
-                tvAreas.text = item.areaVisits.toString()
+//                tvScheduleDate.text = convertEpochTimeToDate(item.date!!.seconds)
+                tvScheduleDate.text = convertDMY2EMDY(item.date!!)
+                val areas = StringBuilder()
+                for (area in item.areaVisits!!){
+                    areas.append(area.value).append(",")
+                }
+                tvAreas.text = areas.toString()
             }
         }
     }

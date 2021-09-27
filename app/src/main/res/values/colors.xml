@@ -10,4 +10,6 @@
 
     <color name="colorGrey">#E5E5E5</color>
     <color name="colorDarkGrey">#D8D7D7</color>
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#757575</color>
 </resources>

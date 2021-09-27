@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmm.brsap.meditell.model.Area
-import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.repository.AreaRepository
-import com.jmm.brsap.meditell.repository.AuthRepository
 import com.jmm.brsap.meditell.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -17,13 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddScheduleViewModel @Inject constructor(
-    val authRepository: AuthRepository,
+class ManageAreaViewModel @Inject constructor(
     private val areaRepository: AreaRepository
-) :ViewModel(){
-
-    val activeStep = MutableLiveData(0)
-    val mSchedule = MutableLiveData<List<Schedule>>()
+):ViewModel() {
 
     private val _areas = MutableLiveData<Resource<List<Area>>>()
     val areas: LiveData<Resource<List<Area>>> = _areas
@@ -42,6 +36,28 @@ class AddScheduleViewModel @Inject constructor(
                 }
                 .collect {
                     _areas.postValue(Resource.Success(it))
+
+                }
+        }
+    }
+
+    private val _isAdded = MutableLiveData<Resource<Boolean>>()
+    val isAdded: LiveData<Resource<Boolean>> = _isAdded
+
+    fun addNewArea(area: Area) {
+        viewModelScope.launch {
+            areaRepository
+                .addNewArea(area)
+                .onStart {
+                    _isAdded.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _isAdded.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _isAdded.postValue(Resource.Success(it))
 
                 }
         }

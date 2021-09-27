@@ -11,7 +11,8 @@ import com.jmm.brsap.meditell.databinding.FragmentHomeBinding
 import com.jmm.brsap.meditell.model.ModelMenu
 import com.jmm.brsap.meditell.ui.schedule.ManageSchedule
 import com.jmm.brsap.meditell.util.BaseFragment
-import com.jmm.brsap.meditell.util.convertYMD2EMDY
+import com.jmm.brsap.meditell.util.convertDMY2EMDY
+
 import com.jmm.brsap.meditell.util.getTodayDate
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +26,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
         super.onViewCreated(view, savedInstanceState)
         setupRvMenus()
         populateMenus()
-        binding.tvTime.text = convertYMD2EMDY(getTodayDate())
+        binding.tvTime.text = convertDMY2EMDY(getTodayDate())
 
         binding.btnStartDay.setOnClickListener {
             findNavController().navigate(R.id.action_home2_to_activeDay)
