@@ -1,5 +1,6 @@
 package com.jmm.brsap.meditell.ui.schedule
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -7,7 +8,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.ActivityAddScheduleBinding
+import com.jmm.brsap.meditell.ui.welcome.MainDashboard
 import com.jmm.brsap.meditell.util.BaseActivity
+import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.AddScheduleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +30,9 @@ class AddSchedule : BaseActivity<ActivityAddScheduleBinding>(ActivityAddSchedule
                 1->{
                     navController.navigate(CreateScheduleDirections.actionCreateScheduleToConfirmSchedule())
                 }
-                2->{}
+                2->{
+                    viewModel.addNewSchedules(viewModel.scheduleList)
+                }
             }
         }
     }
@@ -38,7 +43,32 @@ class AddSchedule : BaseActivity<ActivityAddScheduleBinding>(ActivityAddSchedule
                 binding.btnNext.setText("Submit")
             }
         })
+        viewModel.scheduleAdded.observe(this, { _result ->
+            when (_result.status) {
+                Status.SUCCESS -> {
+                    _result._data?.let {
+                       if (it){
+                           showToast("Schedule added successfully !!!")
+                           finish()
+                       }else{
+                           showToast("Something went wrong!!!")
+                       }
 
+                    }
+
+                    displayLoading(false)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
+                }
+                Status.ERROR -> {
+                    displayLoading(false)
+                    _result.message?.let {
+                        displayError(it)
+                    }
+                }
+            }
+        })
 
     }
 }

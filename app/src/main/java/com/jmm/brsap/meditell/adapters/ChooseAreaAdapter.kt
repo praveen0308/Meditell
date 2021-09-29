@@ -2,6 +2,7 @@ package com.jmm.brsap.meditell.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.TemplateChooseAreaItemBinding
@@ -44,7 +45,15 @@ class ChooseAreaAdapter(private val mListener: ChooseAreaInterface) :
 
         init {
             itemView.setOnClickListener {
-
+                Toast.makeText(it.context, "clicked", Toast.LENGTH_SHORT).show()
+                if (mList[adapterPosition].isSelected){
+                    mList[adapterPosition].isSelected = false
+                    mListener.removeOneSelection(mList[adapterPosition])
+                }else{
+                    mList[adapterPosition].isSelected = true
+                    mListener.addNewSelection(mList[adapterPosition])
+                }
+                notifyDataSetChanged()
             }
 
 
@@ -52,13 +61,19 @@ class ChooseAreaAdapter(private val mListener: ChooseAreaInterface) :
 
         fun bind(item: Area) {
             binding.apply {
-                checkBox.text = item.name
+                tvTitle.text = item.name
+
+                if (item.isSelected) imgCheckbox.setImageResource(R.drawable.ic_baseline_check_box_24)
+                else imgCheckbox.setImageResource(R.drawable.ic_baseline_crop_square_24)
+
+
             }
         }
     }
 
     interface ChooseAreaInterface {
-
+        fun addNewSelection(area: Area)
+        fun removeOneSelection(area: Area)
     }
 
 

@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.FragmentAddNewAreaBinding
 import com.jmm.brsap.meditell.model.Area
+import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.util.BaseBottomSheetDialogFragment
 import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.ManageAreaViewModel
@@ -18,9 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddNewArea : BaseBottomSheetDialogFragment<FragmentAddNewAreaBinding>(FragmentAddNewAreaBinding::inflate) {
 
     private val viewModel by viewModels<ManageAreaViewModel>()
-
+    private var selectedCity = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getCities()
         binding.apply {
             btnSubmit.setOnClickListener {
                 val areaName =etAreaName.text.toString().trim()
@@ -28,21 +32,20 @@ class AddNewArea : BaseBottomSheetDialogFragment<FragmentAddNewAreaBinding>(Frag
                 viewModel.addNewArea(Area(
                     name = areaName,
                     addressInfo = areaAddress,
-                    active = true
+                    active = true,
+                    cityId = selectedCity
                 ))
             }
         }
 
     }
     override fun subscribeObservers() {
-        viewModel.isAdded.observe(viewLifecycleOwner, { _result ->
+        viewModel.cities.observe(viewLifecycleOwner, { _result ->
             when (_result.status) {
                 Status.SUCCESS -> {
                     _result._data?.let {
-                        showToast("Added successfully !!!")
-                        dismiss()
+                       populateCityAdapter(it.toMutableList())
                     }
-
                     displayLoading(false)
                 }
                 Status.LOADING -> {
@@ -56,5 +59,36 @@ class AddNewArea : BaseBottomSheetDialogFragment<FragmentAddNewAreaBinding>(Frag
                 }
             }
         })
+        viewModel.isAdded.observe(viewLifecycleOwner, { _result ->
+            when (_result.status) {
+                Status.SUCCESS -> {
+                    _result._data?.let {
+                        showToast("Added successfully !!!")
+                        dismiss()
+                    }
+                    displayLoading(false)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
+                }
+                Status.ERROR -> {
+                    displayLoading(false)
+                    _result.message?.let {
+                        displayError(it)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun populateCityAdapter(cityList:MutableList<City>){
+        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, cityList)
+        binding.actvCities.threshold = 1 //start searching for values after typing first character
+        binding.actvCities.setAdapter(arrayAdapter)
+
+        binding.actvCities.setOnItemClickListener { parent, view, position, id ->
+            val city = parent.getItemAtPosition(position) as City
+            selectedCity = city.cityId!!
+        }
     }
 }

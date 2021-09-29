@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 
 import javax.inject.Inject
@@ -32,7 +33,10 @@ class AuthRepository @Inject constructor(
                 .whereEqualTo("password", password).get().await()
 
             if (response.size() > 0) {
+                val representativeId = response.documents[0].id
+                Timber.d("RepresentativeId : $representativeId")
                 val salesRepresentative = response.documents[0].toObject<SalesRepresentative>()
+                salesRepresentative!!.userId = representativeId
                 emit(salesRepresentative)
 
             } else emit(null)

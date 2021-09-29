@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmm.brsap.meditell.model.Area
+import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.repository.AreaRepository
 import com.jmm.brsap.meditell.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,14 +19,34 @@ import javax.inject.Inject
 class ManageAreaViewModel @Inject constructor(
     private val areaRepository: AreaRepository
 ):ViewModel() {
+    private val _cities = MutableLiveData<Resource<List<City>>>()
+    val cities: LiveData<Resource<List<City>>> = _cities
+
+    fun getCities() {
+        viewModelScope.launch {
+            areaRepository
+                .getCities()
+                .onStart {
+                    _cities.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _cities.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _cities.postValue(Resource.Success(it))
+                }
+        }
+    }
 
     private val _areas = MutableLiveData<Resource<List<Area>>>()
     val areas: LiveData<Resource<List<Area>>> = _areas
 
-    fun getAreas() {
+    fun getAreas(cityId:Int=0) {
         viewModelScope.launch {
             areaRepository
-                .getAreas()
+                .getAreas(cityId)
                 .onStart {
                     _areas.postValue(Resource.Loading(true))
                 }

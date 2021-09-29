@@ -36,6 +36,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     private fun populateMenus() {
         val menuList= mutableListOf<ModelMenu>()
         menuList.add(ModelMenu("Manage Schedule", R.drawable.ic_baseline_schedule_24))
+        menuList.add(ModelMenu("Add new area", R.drawable.ic_baseline_schedule_24))
         menusAdapter.setModelMenuList(menuList)
     }
 
@@ -55,6 +56,10 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     override fun onMenuClick(menuId: Int) {
         when(menuId){
             0->{startActivity(Intent(requireActivity(), ManageSchedule::class.java))}
+            1->{
+                val sheet = AddNewArea()
+                sheet.show(parentFragmentManager,sheet.tag)
+            }
         }
     }
 

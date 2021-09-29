@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jmm.brsap.meditell.repository.AuthRepository
 import com.jmm.brsap.meditell.repository.UserPreferencesRepository
 import com.jmm.brsap.meditell.repository.AreaRepository
+import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +34,11 @@ object RepositoryModule {
     fun provideAreaRepository(db: FirebaseFirestore): AreaRepository {
         return AreaRepository(db)
     }
+
+    @Singleton
+    @Provides
+    fun provideSalesRepresentativeRepo(db: FirebaseFirestore,userPreferencesRepository: UserPreferencesRepository): SalesRepresentativeRepository {
+        return SalesRepresentativeRepository(db,userPreferencesRepository)
+    }
+
 }

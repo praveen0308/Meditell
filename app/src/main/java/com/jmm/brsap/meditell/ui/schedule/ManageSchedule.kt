@@ -18,6 +18,7 @@ import com.jmm.brsap.meditell.util.FirebaseDB
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,23 +40,21 @@ class ManageSchedule : BaseActivity<ActivityManageScheduleBinding>(ActivityManag
         }
 
         lifecycleScope.launch {
-/*
-            val response = db.collection(FirebaseDB.SALES_REPRESENTATIVES).whereEqualTo("userName","9699960540").whereEqualTo("password","1234").get().await()
-            Log.d(TAG, "Result => $response")
+            /*val response = db.collection(FirebaseDB.SALES_REPRESENTATIVES).whereEqualTo("userName","9699960540").whereEqualTo("password","1234").get().await()
+
             for (document in response) {
-                Log.d(TAG, "Result => ${document.toObject<SalesRepresentative>()}")
-            }
-*/
-            val result = db.collection("salesrepresentatives").document("2cbMfovcmRZINVueP1IS").collection("schedule").get().await()
+                Timber.d(document.id)
+            }*/
+            val result = db.collection("salesrepresentatives").document("MTS10000").collection("schedule").get().await()
 
             Log.d(TAG, "Result => $result")
+
             val schedules = result.toObjects<Schedule>()
             scheduleAdapter.setScheduleList(schedules)
             for (document in schedules) {
 
                 Log.d(TAG, "${document.date} => ${document.areaVisits.toString()}")
             }
-
         }
 
     }

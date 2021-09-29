@@ -69,6 +69,7 @@ class Login : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) 
                             viewModel.updateFirstName(it.firstName)
                             viewModel.updateLastName(it.lastName)
                             viewModel.updateUserName(it.userName)
+                            viewModel.updateUserId(it.userId!!)
                         }finally {
                             showToast("Login successful !!!")
                             startActivity(Intent(requireActivity(),MainDashboard::class.java))

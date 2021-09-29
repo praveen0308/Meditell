@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmm.brsap.meditell.model.Area
+import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.repository.AreaRepository
 import com.jmm.brsap.meditell.repository.AuthRepository
+import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
 import com.jmm.brsap.meditell.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -19,19 +21,44 @@ import javax.inject.Inject
 @HiltViewModel
 class AddScheduleViewModel @Inject constructor(
     val authRepository: AuthRepository,
-    private val areaRepository: AreaRepository
+    private val areaRepository: AreaRepository,
+    private val salesRepresentativeRepository: SalesRepresentativeRepository
 ) :ViewModel(){
 
     val activeStep = MutableLiveData(0)
+    val activeDay = MutableLiveData(0)
     val mSchedule = MutableLiveData<List<Schedule>>()
+
+    var scheduleList= listOf<Schedule>()
+
+    private val _cities = MutableLiveData<Resource<List<City>>>()
+    val cities: LiveData<Resource<List<City>>> = _cities
+
+    fun getCities() {
+        viewModelScope.launch {
+            areaRepository
+                .getCities()
+                .onStart {
+                    _cities.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _cities.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _cities.postValue(Resource.Success(it))
+                }
+        }
+    }
 
     private val _areas = MutableLiveData<Resource<List<Area>>>()
     val areas: LiveData<Resource<List<Area>>> = _areas
 
-    fun getAreas() {
+    fun getAreas(cityId:Int=0) {
         viewModelScope.launch {
             areaRepository
-                .getAreas()
+                .getAreas(cityId)
                 .onStart {
                     _areas.postValue(Resource.Loading(true))
                 }
@@ -42,6 +69,28 @@ class AddScheduleViewModel @Inject constructor(
                 }
                 .collect {
                     _areas.postValue(Resource.Success(it))
+
+                }
+        }
+    }
+
+    private val _scheduleAdded = MutableLiveData<Resource<Boolean>>()
+    val scheduleAdded: LiveData<Resource<Boolean>> = _scheduleAdded
+
+    fun addNewSchedules(schedules:List<Schedule>) {
+        viewModelScope.launch {
+            salesRepresentativeRepository
+                .addSchedule(schedules)
+                .onStart {
+                    _scheduleAdded.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _scheduleAdded.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _scheduleAdded.postValue(Resource.Success(it))
 
                 }
         }

@@ -19,6 +19,7 @@ class LoginViewModel @Inject constructor(
 ): ViewModel(){
 
     val userName = userPreferencesRepository.userName.asLiveData()
+    val userId = userPreferencesRepository.userId.asLiveData()
     val welcomeStatus = userPreferencesRepository.welcomeStatus.asLiveData()
 
 
@@ -37,6 +38,9 @@ class LoginViewModel @Inject constructor(
         userPreferencesRepository.updateUserName(userName)
     }
 
+    fun updateUserId(userId:String)=viewModelScope.launch {
+        userPreferencesRepository.updateUserId(userId)
+    }
     fun updateFirstName(firstName:String)=viewModelScope.launch {
         userPreferencesRepository.updateUserFirstName(firstName)
     }

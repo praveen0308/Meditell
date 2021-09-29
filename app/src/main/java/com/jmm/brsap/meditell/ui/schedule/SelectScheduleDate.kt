@@ -54,14 +54,16 @@ class SelectScheduleDate :
                 }
 
                 datePicker.addOnPositiveButtonClickListener {
-                    showToast(convertSecondsTimeToDate(it))
+
                     val selectedDate = convertSecondsTimeToDate(it)
                     binding.lblSelectedDates.setText("Selected Date")
                     binding.tvSelectedDates.text = "from $startDate to $endDate"
 
                     val schedules = mutableListOf<Schedule>()
                     schedules.add(Schedule(date = selectedDate))
-                    viewModel.mSchedule.postValue(schedules)
+//                    viewModel.mSchedule.postValue(schedules)
+                    viewModel.scheduleList=schedules
+
                 }
             } else {
                 val datePicker =
@@ -79,9 +81,10 @@ class SelectScheduleDate :
                     val dates = getDaysBetweenDates(startDate, endDate)
                     val schedules = mutableListOf<Schedule>()
                     for (day in dates) {
-                        schedules.add(Schedule(date = day))
+                        schedules.add(Schedule(date = day,areaVisits = mutableListOf()))
                     }
-                    viewModel.mSchedule.postValue(schedules)
+                    viewModel.scheduleList=schedules
+//                    viewModel.mSchedule.postValue(schedules)
 
                 }
             }

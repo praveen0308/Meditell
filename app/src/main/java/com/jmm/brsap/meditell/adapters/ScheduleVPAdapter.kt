@@ -2,12 +2,13 @@ package com.jmm.brsap.meditell.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.LayoutCurrentDateScheduleBinding
 import com.jmm.brsap.meditell.model.*
 
-class ScheduleVPAdapter(private val mListener: ScheduleVPInterface) :
+class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitAdapter.CurrentDateAreaVisitInterface) :
     RecyclerView.Adapter<ScheduleVPAdapter.ScheduleVPViewHolder>() {
 
 
@@ -19,7 +20,7 @@ class ScheduleVPAdapter(private val mListener: ScheduleVPInterface) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), mListener
+            )
         )
     }
 
@@ -38,8 +39,8 @@ class ScheduleVPAdapter(private val mListener: ScheduleVPInterface) :
     }
 
     inner class ScheduleVPViewHolder(
-        val binding: LayoutCurrentDateScheduleBinding,
-        private val mListener: ScheduleVPInterface
+        val binding: LayoutCurrentDateScheduleBinding
+
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -52,6 +53,20 @@ class ScheduleVPAdapter(private val mListener: ScheduleVPInterface) :
 
         fun bind(item: Schedule) {
             binding.apply {
+                val currentDateAreaVisitAdapter = CurrentDateAreaVisitAdapter(currentDateAreaVisitInterface)
+                rvCurrentDateSchedule.apply {
+                    setHasFixedSize(true)
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = currentDateAreaVisitAdapter
+                }
+                val areas = mutableListOf<Area>()
+                item.areaVisits?.let {
+                    for (area in it){
+                        areas.add(Area(areaId = area))
+                    }
+                }
+                currentDateAreaVisitAdapter.setAreaList(areas)
+
 
             }
         }
