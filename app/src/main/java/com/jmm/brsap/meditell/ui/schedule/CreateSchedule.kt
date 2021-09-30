@@ -26,6 +26,7 @@ import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.util.Status
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -54,12 +55,12 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
             var alreadyExist = false
             viewModel.scheduleList[viewModel.activeDay.value!!].areaVisits!!.forEach {
                 if (it == selectedArea.areaId) alreadyExist=true
-
             }
             if(alreadyExist) showToast("already added")
             else{
 
                 viewModel.scheduleList[viewModel.activeDay.value!!].areaVisits!!.add(selectedArea.areaId!!)
+                viewModel.scheduleList[viewModel.activeDay.value!!].scheduleAreas!!.add(Pair(selectedArea.areaId!!,selectedArea.name!!))
             }
 
             scheduleVPAdapter.setScheduleList(viewModel.scheduleList)
@@ -87,11 +88,13 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
         binding.vpScheduleFrame.apply {
             adapter = scheduleVPAdapter
         }
+
         scheduleVPAdapter.setScheduleList(viewModel.scheduleList)
 
     }
 
     override fun subscribeObservers() {
+
         viewModel.activeDay.observe(viewLifecycleOwner,{activeDay->
             viewModel.scheduleList.forEach { it.isActive=false }
             viewModel.scheduleList[activeDay].isActive = true
@@ -154,6 +157,7 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
             else{
                 viewModel.scheduleList[viewModel.activeDay.value!!].dayCityVisit = city.cityId!!
                 viewModel.scheduleList[viewModel.activeDay.value!!].areaVisits!!.clear()
+                viewModel.scheduleList[viewModel.activeDay.value!!].scheduleAreas!!.clear()
                 viewModel.getAreas(city.cityId!!)
             }
 

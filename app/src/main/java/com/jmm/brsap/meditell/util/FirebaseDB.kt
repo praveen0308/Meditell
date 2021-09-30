@@ -7,4 +7,7 @@ object FirebaseDB {
     const val DOCTORS = "doctors"
     const val INTERACTIONS = "interactions"
     const val PHARMACY = "pharmacy"
+    const val CHECKIN = "checkIn"
+    const val CHECKOUT = "checkOut"
+
 }

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Meditell">
         <activity
+            android:name=".ui.currentdayactivity.CurrentActiveDayActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.schedule.CreateSchedule"
             android:exported="true" />
         <activity

@@ -19,6 +19,9 @@ class AddSchedule : BaseActivity<ActivityAddScheduleBinding>(ActivityAddSchedule
 
     private val viewModel by viewModels<AddScheduleViewModel>()
     private lateinit var navController: NavController
+
+    private var userId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navController = Navigation.findNavController(this,R.id.nav_host_add_schedule)
@@ -31,13 +34,16 @@ class AddSchedule : BaseActivity<ActivityAddScheduleBinding>(ActivityAddSchedule
                     navController.navigate(CreateScheduleDirections.actionCreateScheduleToConfirmSchedule())
                 }
                 2->{
-                    viewModel.addNewSchedules(viewModel.scheduleList)
+                    viewModel.addNewSchedules(userId,viewModel.scheduleList)
                 }
             }
         }
     }
 
     override fun subscribeObservers() {
+        viewModel.userId.observe(this,{
+            userId =it
+        })
         viewModel.activeStep.observe(this,{
             if (it==2){
                 binding.btnNext.setText("Submit")

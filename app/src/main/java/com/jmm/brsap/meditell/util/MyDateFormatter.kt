@@ -6,6 +6,7 @@ import java.util.*
 
 // Default
 val SDF_DMY_WITH_DASH = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+val SDF_DMYHMS = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US)
 val SDF_YMD_WITH_DASH = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 val SDF_EDMY = SimpleDateFormat("EE, dd MMM yyyy", Locale.US)
 
@@ -41,6 +42,7 @@ fun convertSecondsTimeToDate(seconds:Long,sdf:SimpleDateFormat = SDF_DMY_WITH_DA
 fun getTodayDate():String{
     return getDaysAgo(0)
 }
+
 
 fun getDaysAgo(daysAgo: Int): String {
     val calendar = Calendar.getInstance()

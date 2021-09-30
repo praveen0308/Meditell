@@ -55,7 +55,7 @@ class CurrentDateAreaVisitAdapter(private val mListener: CurrentDateAreaVisitInt
 
         fun bind(item: Area) {
             binding.apply {
-                tvTitle.text  = item.areaId.toString()
+                tvTitle.text  = item.name
             }
         }
     }

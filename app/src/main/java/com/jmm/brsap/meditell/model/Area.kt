@@ -10,10 +10,11 @@ data class Area(
     val active:Boolean?=null,
     val addedBy:String?=null,
     val addedOn:String?=null,
-
+    
     // custom
     @JvmField
-    @Exclude var isSelected:Boolean = false
+    @Exclude
+    var isSelected:Boolean = false
 ){
     override fun toString(): String {
         return name.toString()

@@ -7,7 +7,7 @@
     tools:context=".ui.schedule.AddSchedule">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_next"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:text="Next"
@@ -15,13 +15,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView4"
+    <fragment
+        android:id="@+id/nav_host_add_schedule"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

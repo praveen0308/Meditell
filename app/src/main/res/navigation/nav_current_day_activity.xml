@@ -2,29 +2,29 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_interactions"
-    app:startDestination="@id/selectInteractionType">
+    android:id="@+id/nav_current_day_activity"
+    app:startDestination="@id/activeDay2">
 
     <fragment
-        android:id="@+id/selectInteractionType"
-        android:name="com.jmm.brsap.meditell.ui.interaction.SelectInteractionType"
-        android:label="fragment_select_interaction_type"
-        tools:layout="@layout/fragment_select_interaction_type" >
+        android:id="@+id/activeDay2"
+        android:name="com.jmm.brsap.meditell.ui.currentdayactivity.ActiveDay"
+        android:label="fragment_active_day"
+        tools:layout="@layout/fragment_active_day" >
         <action
-            android:id="@+id/action_selectInteractionType_to_selectInteractedWith"
-            app:destination="@id/selectInteractedWith" />
+            android:id="@+id/action_activeDay2_to_selectInteractedWith2"
+            app:destination="@id/selectInteractedWith2" />
     </fragment>
     <fragment
-        android:id="@+id/selectInteractedWith"
+        android:id="@+id/selectInteractedWith2"
         android:name="com.jmm.brsap.meditell.ui.currentdayactivity.SelectInteractedWith"
         android:label="fragment_select_interacted_with"
         tools:layout="@layout/fragment_select_interacted_with" >
         <action
-            android:id="@+id/action_selectInteractedWith_to_submitInteraction"
-            app:destination="@id/submitInteraction" />
+            android:id="@+id/action_selectInteractedWith2_to_submitInteraction2"
+            app:destination="@id/submitInteraction2" />
     </fragment>
     <fragment
-        android:id="@+id/submitInteraction"
+        android:id="@+id/submitInteraction2"
         android:name="com.jmm.brsap.meditell.ui.currentdayactivity.SubmitInteraction"
         android:label="fragment_submit_interaction"
         tools:layout="@layout/fragment_submit_interaction" />

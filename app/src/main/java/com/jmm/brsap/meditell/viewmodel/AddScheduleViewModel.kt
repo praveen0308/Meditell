@@ -1,15 +1,13 @@
 package com.jmm.brsap.meditell.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.repository.AreaRepository
 import com.jmm.brsap.meditell.repository.AuthRepository
 import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
+import com.jmm.brsap.meditell.repository.UserPreferencesRepository
 import com.jmm.brsap.meditell.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -22,9 +20,10 @@ import javax.inject.Inject
 class AddScheduleViewModel @Inject constructor(
     val authRepository: AuthRepository,
     private val areaRepository: AreaRepository,
-    private val salesRepresentativeRepository: SalesRepresentativeRepository
+    private val salesRepresentativeRepository: SalesRepresentativeRepository,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) :ViewModel(){
-
+    val userId = userPreferencesRepository.userId.asLiveData()
     val activeStep = MutableLiveData(0)
     val activeDay = MutableLiveData(0)
     val mSchedule = MutableLiveData<List<Schedule>>()
@@ -77,10 +76,10 @@ class AddScheduleViewModel @Inject constructor(
     private val _scheduleAdded = MutableLiveData<Resource<Boolean>>()
     val scheduleAdded: LiveData<Resource<Boolean>> = _scheduleAdded
 
-    fun addNewSchedules(schedules:List<Schedule>) {
+    fun addNewSchedules(userId:String,schedules:List<Schedule>) {
         viewModelScope.launch {
             salesRepresentativeRepository
-                .addSchedule(schedules)
+                .addSchedule(userId,schedules)
                 .onStart {
                     _scheduleAdded.postValue(Resource.Loading(true))
                 }

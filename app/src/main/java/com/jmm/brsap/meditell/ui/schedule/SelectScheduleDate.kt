@@ -63,7 +63,7 @@ class SelectScheduleDate :
                     schedules.add(Schedule(date = selectedDate))
 //                    viewModel.mSchedule.postValue(schedules)
                     viewModel.scheduleList=schedules
-
+                    somethingChanged()
                 }
             } else {
                 val datePicker =
@@ -84,6 +84,7 @@ class SelectScheduleDate :
                         schedules.add(Schedule(date = day,areaVisits = mutableListOf()))
                     }
                     viewModel.scheduleList=schedules
+                    somethingChanged()
 //                    viewModel.mSchedule.postValue(schedules)
 
                 }
@@ -91,8 +92,8 @@ class SelectScheduleDate :
         }
     }
 
-    override fun subscribeObservers() {
-        viewModel.mSchedule.observe(viewLifecycleOwner, {
+    private fun somethingChanged(){
+        viewModel.scheduleList.let {
             if (it.isNullOrEmpty()) {
                 binding.apply {
                     lblSelectedDates.isVisible = false
@@ -113,7 +114,11 @@ class SelectScheduleDate :
                     tvSelectedDates.text = "from ${it[0].date} to ${it.last().date}"
                 }
             }
-
+        }
+    }
+    override fun subscribeObservers() {
+        viewModel.userId.observe(viewLifecycleOwner,{
+            Timber.d("UserID : $it")
         })
     }
 

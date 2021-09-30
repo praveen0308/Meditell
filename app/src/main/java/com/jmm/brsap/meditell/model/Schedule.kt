@@ -13,7 +13,23 @@ data class Schedule (
 
     @JvmField
     @Exclude
-    var isActive:Boolean =false
+    var isActive:Boolean =false,
+
+    @Exclude @set:Exclude @get:Exclude
+    var scheduleAreas:MutableList<Pair<Int,String>> = mutableListOf(),
+
+    var checkIn:String?=null,
+    var checkOut:String?=null,
+
+    /*
+    * if dayStatus
+    * is 0 -> representative not yet checked in
+    * is 1 -> representative already checked in
+    * is 2 -> representative checked out
+    *
+    * */
+
+    var dayStatus:Int=0
 ){
 
 }

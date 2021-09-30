@@ -56,8 +56,8 @@ class ScheduleAdapter(private val mListener: ScheduleInterface) :
 //                tvScheduleDate.text = convertEpochTimeToDate(item.date!!.seconds)
                 tvScheduleDate.text = convertDMY2EMDY(item.date!!)
                 val areas = StringBuilder()
-                for (area in item.areaVisits!!){
-                    areas.append(area).append(",")
+                for (area in item.scheduleAreas!!){
+                    areas.append(area.second).append(",")
                 }
                 tvAreas.text = areas.toString()
             }

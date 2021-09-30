@@ -3,14 +3,18 @@ package com.jmm.brsap.meditell.repository
 import androidx.lifecycle.asLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.util.FirebaseDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
+import okhttp3.internal.wait
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,14 +22,15 @@ class SalesRepresentativeRepository @Inject constructor(
     private val db: FirebaseFirestore,
     private val userPreferences: UserPreferencesRepository
 ) {
-    private val userId = userPreferences.userId.asLiveData()
-    suspend fun addSchedule(schedules: List<Schedule>): Flow<Boolean> {
+    //    private val userId = userPreferences.userId.asLiveData()
+    suspend fun addSchedule(userId: String, schedules: List<Schedule>): Flow<Boolean> {
         return flow {
-            Timber.d(userId.value.toString())
+
+            Timber.d(userId.toString())
 
             try {
                 for (schedule in schedules) {
-                    db.collection(FirebaseDB.SALES_REPRESENTATIVES).document("MTS10000")
+                    db.collection(FirebaseDB.SALES_REPRESENTATIVES).document(userId)
                         .collection("schedule").document(schedule.date!!).set(schedule)
                 }
             } finally {
@@ -34,4 +39,58 @@ class SalesRepresentativeRepository @Inject constructor(
 
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun getSchedule(userId: String): Flow<List<Schedule>> {
+        return flow {
+            val result = db.collection(FirebaseDB.SALES_REPRESENTATIVES).document(userId)
+                .collection("schedule").get().await()
+            val schedules = result.toObjects<Schedule>()
+
+            for (schedule in schedules) {
+                for (areaId in schedule.areaVisits!!) {
+                    val area =
+                        db.collection(FirebaseDB.AREAS).document(areaId.toString()).get().await()
+                    val areaName = area["name"]
+                    schedule.scheduleAreas.add(Pair(areaId, areaName.toString()))
+                }
+            }
+
+            emit(schedules)
+
+        }.flowOn(Dispatchers.Default)
+    }
+
+    suspend fun markAttendance(
+        userId: String,
+        scheduleDate: String,
+        dateTime: String,
+        action: String
+    ): Flow<Boolean> {
+        return flow {
+            val scheduleRef = db.collection(FirebaseDB.SALES_REPRESENTATIVES).document(userId)
+                .collection("schedule").document(scheduleDate)
+            scheduleRef.update(action, dateTime).await()
+
+            if (action=="checkIn") scheduleRef.update("dayStatus",1).await()
+            else scheduleRef.update("dayStatus",2).await()
+
+            emit(true)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getCurrentDayStatus(
+        userId: String,
+        scheduleDate: String
+    ): Flow<Int> {
+        return flow {
+            val currentDaySchedule = db.collection(FirebaseDB.SALES_REPRESENTATIVES).document(userId)
+                .collection("schedule").document(scheduleDate).get().await()
+
+            val schedule = currentDaySchedule.toObject<Schedule>()
+
+            emit(schedule!!.dayStatus)
+        }.flowOn(Dispatchers.IO)
+    }
+
+
 }

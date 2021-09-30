@@ -53,21 +53,19 @@ class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitA
 
         fun bind(item: Schedule) {
             binding.apply {
-                val currentDateAreaVisitAdapter = CurrentDateAreaVisitAdapter(currentDateAreaVisitInterface)
+                val currentDateAreaVisitAdapter =
+                    CurrentDateAreaVisitAdapter(currentDateAreaVisitInterface)
                 rvCurrentDateSchedule.apply {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(context)
                     adapter = currentDateAreaVisitAdapter
                 }
                 val areas = mutableListOf<Area>()
-                item.areaVisits?.let {
-                    for (area in it){
-                        areas.add(Area(areaId = area))
-                    }
+
+                for (area in item.scheduleAreas) {
+                    areas.add(Area(areaId = area.first,name = area.second))
                 }
                 currentDateAreaVisitAdapter.setAreaList(areas)
-
-
             }
         }
     }

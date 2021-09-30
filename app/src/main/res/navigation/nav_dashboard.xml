@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/activeDay"
-        android:name="com.jmm.brsap.meditell.ui.ActiveDay"
+        android:name="com.jmm.brsap.meditell.ui.currentdayactivity.ActiveDay"
         android:label="fragment_active_day"
         tools:layout="@layout/fragment_active_day" />
 </navigation>
