@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.jmm.brsap.meditell.adapters.MenusAdapter
 import com.jmm.brsap.meditell.databinding.FragmentActiveDayBinding
 import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.util.BaseFragment
+import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.util.convertDMY2EMDY
 import com.jmm.brsap.meditell.util.getTodayDate
 import com.jmm.brsap.meditell.viewmodel.CurrentDayActivityViewModel
@@ -42,9 +44,28 @@ class ActiveDay : BaseFragment<FragmentActiveDayBinding>(FragmentActiveDayBindin
     override fun subscribeObservers() {
         viewModel.userId.observe(viewLifecycleOwner,{
             userId = it
+            viewModel.getCurrentDayAreas(userId, getTodayDate())
         })
 
-
+        viewModel.areas.observe(this, { _result ->
+            when (_result.status) {
+                Status.SUCCESS -> {
+                    _result._data?.let {areas->
+                      currentDateAreaVisitAdapter.setAreaList(areas)
+                    }
+                    displayLoading(false)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
+                }
+                Status.ERROR -> {
+                    displayLoading(false)
+                    _result.message?.let {
+                        displayError(it)
+                    }
+                }
+            }
+        })
     }
     private fun setupRvAreas(){
         currentDateAreaVisitAdapter = CurrentDateAreaVisitAdapter(this)
@@ -61,6 +82,7 @@ class ActiveDay : BaseFragment<FragmentActiveDayBinding>(FragmentActiveDayBindin
     }
 
     override fun onItemClick(item: Area) {
-
+        viewModel.selectedAreaId = item.areaId!!
+        findNavController().navigate(ActiveDayDirections.actionActiveDay2ToSelectInteractedWith2())
     }
 }

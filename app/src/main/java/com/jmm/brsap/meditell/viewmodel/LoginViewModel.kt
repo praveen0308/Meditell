@@ -3,6 +3,7 @@ package com.jmm.brsap.meditell.viewmodel
 import androidx.lifecycle.*
 import com.jmm.brsap.meditell.model.SalesRepresentative
 import com.jmm.brsap.meditell.repository.AuthRepository
+import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
 import com.jmm.brsap.meditell.repository.UserPreferencesRepository
 import com.jmm.brsap.meditell.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val salesRepresentativeRepository: SalesRepresentativeRepository
 ): ViewModel(){
 
     val userName = userPreferencesRepository.userName.asLiveData()
@@ -92,6 +94,27 @@ class LoginViewModel @Inject constructor(
                     }else{
                         _loginResponse.postValue(Resource.Success(it))
                     }
+                }
+        }
+    }
+
+    private val _dayStatus = MutableLiveData<Resource<Int>>()
+    val dayStatus: LiveData<Resource<Int>> = _dayStatus
+
+    fun getDayStatus(userID: String,currentDate:String) {
+        viewModelScope.launch {
+            salesRepresentativeRepository
+                .getCurrentDayStatus(userID,currentDate)
+                .onStart {
+                    _dayStatus.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _dayStatus.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _dayStatus.postValue(Resource.Success(it))
                 }
         }
     }

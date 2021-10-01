@@ -40,9 +40,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
 
             viewModel.markAttendanceForTheDay(userId, getTodayDate(),currentTime,FirebaseDB.CHECKIN)
 //            findNavController().navigate(R.id.action_home2_to_activeDay)
-            val intent = Intent(requireActivity(),CurrentActiveDayActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+
         }
     }
 

@@ -1,7 +1,7 @@
 package com.jmm.brsap.meditell.model
 
 data class Pharmacy(
-    val pharmacyId:Int,
+    var pharmacyId:Int,
     val areaId:Int,
     val pharmacyName:String,
     val address :String,

@@ -22,6 +22,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/nav_welcome"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splashScreen_to_currentActiveDayActivity"
+            app:destination="@id/currentActiveDayActivity" />
     </fragment>
     <fragment
         android:id="@+id/login"
@@ -37,4 +40,9 @@
         android:name="com.jmm.brsap.meditell.ui.welcome.MainDashboard"
         android:label="activity_main_dashboard"
         tools:layout="@layout/activity_main_dashboard" />
+    <activity
+        android:id="@+id/currentActiveDayActivity"
+        android:name="com.jmm.brsap.meditell.ui.currentdayactivity.CurrentActiveDayActivity"
+        android:label="activity_current_active_day"
+        tools:layout="@layout/activity_current_active_day" />
 </navigation>

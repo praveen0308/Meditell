@@ -2,10 +2,7 @@ package com.jmm.brsap.meditell.di
 
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jmm.brsap.meditell.repository.AuthRepository
-import com.jmm.brsap.meditell.repository.UserPreferencesRepository
-import com.jmm.brsap.meditell.repository.AreaRepository
-import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
+import com.jmm.brsap.meditell.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,5 +37,12 @@ object RepositoryModule {
     fun provideSalesRepresentativeRepo(db: FirebaseFirestore,userPreferencesRepository: UserPreferencesRepository): SalesRepresentativeRepository {
         return SalesRepresentativeRepository(db,userPreferencesRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideInteractionRepo(db: FirebaseFirestore): InteractionRepository {
+        return InteractionRepository(db)
+    }
+
 
 }

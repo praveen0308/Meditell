@@ -27,5 +27,9 @@
         android:id="@+id/submitInteraction2"
         android:name="com.jmm.brsap.meditell.ui.currentdayactivity.SubmitInteraction"
         android:label="fragment_submit_interaction"
-        tools:layout="@layout/fragment_submit_interaction" />
+        tools:layout="@layout/fragment_submit_interaction" >
+        <action
+            android:id="@+id/action_submitInteraction2_to_activeDay2"
+            app:destination="@id/activeDay2" />
+    </fragment>
 </navigation>
