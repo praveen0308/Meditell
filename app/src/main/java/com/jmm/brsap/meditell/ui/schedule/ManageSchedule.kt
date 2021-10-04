@@ -74,19 +74,6 @@ class ManageSchedule :
             val layoutManager = LinearLayoutManager(context)
             val decorator = MyDividerItemDecoration(AppCompatResources.getDrawable(context,R.drawable.rv_horizontal_line))
             addItemDecoration(decorator)
-            /*val dividerItemDecoration = MyDividerItemDecoration(
-                context,
-                layoutManager.orientation
-            )
-            addItemDecoration(dividerItemDecoration.apply {
-                AppCompatResources.getDrawable(context, R.drawable.rv_horizontal_line)?.let {
-                    setDrawable(it)
-                }
-            })*/
-
-
-
-
 
             this.layoutManager = layoutManager
             adapter = scheduleAdapter

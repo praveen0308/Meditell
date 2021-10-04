@@ -8,7 +8,7 @@
     tools:context=".ui.schedule.SelectScheduleDate"
     android:paddingHorizontal="16dp">
 
-    <RadioGroup
+  <!--  <RadioGroup
         android:id="@+id/rg_types"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,39 +36,160 @@
             android:text="Weekly" />
 
     </RadioGroup>
+-->
+    <LinearLayout
+        android:id="@+id/ll_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cd_single_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="@dimen/dashboard_widget_radius"
+            app:cardElevation="8dp"
+            app:strokeColor="@color/material_on_surface_stroke"
+            app:strokeWidth="2dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="24dp">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="40dp"
+                    android:layout_height="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_single_day" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Single Day"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cd_weekly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="@dimen/dashboard_widget_radius"
+            app:cardElevation="8dp"
+            app:strokeColor="@color/material_on_surface_stroke"
+            app:strokeWidth="2dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="24dp">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="40dp"
+                    android:layout_height="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Weekly"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
     <TextView
         android:id="@+id/lbl_selected_dates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Selected Dates : "
+        android:text="Dates selected"
+        style="@style/HeadingTextAppearance"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_select_dates"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_selected_dates"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_selected_dates"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_selected_dates"
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_of_days_selected"
+        app:spanCount="4"
+        tools:listitem="@layout/template_selected_date"
         tools:visibility="visible" />
 
     <Button
         android:id="@+id/btn_select_dates"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:text="Select dates"
+        style="@style/MyMaterialButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rg_types" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_types" />
+
+    <TextView
+        android:id="@+id/tv_no_of_days_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="5 Days"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/lbl_selected_dates"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_selected_dates"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="selected"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_no_of_days_selected"
+        app:layout_constraintStart_toEndOf="@+id/tv_no_of_days_selected"
+        app:layout_constraintTop_toTopOf="@+id/tv_no_of_days_selected"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

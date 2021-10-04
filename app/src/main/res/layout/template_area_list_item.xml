@@ -11,8 +11,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="14sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/divider70"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:weightSum="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="70"
+            android:background="@color/colorPrimary10" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

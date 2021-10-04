@@ -16,7 +16,7 @@ data class Schedule (
     var isActive:Boolean =false,
 
     @Exclude @set:Exclude @get:Exclude
-    var scheduleAreas:MutableList<Pair<Int,String>> = mutableListOf(),
+    var scheduleAreas:MutableList<Area> = mutableListOf(),
 
     var checkIn:String?=null,
     var checkOut:String?=null,

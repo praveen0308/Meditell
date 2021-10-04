@@ -2,6 +2,7 @@ package com.jmm.brsap.meditell.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.TemplateAreaListItemBinding
@@ -56,6 +57,7 @@ class CurrentDateAreaVisitAdapter(private val mListener: CurrentDateAreaVisitInt
         fun bind(item: Area) {
             binding.apply {
                 tvTitle.text  = item.name
+                divider70.isVisible = !item.isLast
             }
         }
     }

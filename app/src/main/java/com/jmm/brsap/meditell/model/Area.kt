@@ -14,7 +14,13 @@ data class Area(
     // custom
     @JvmField
     @Exclude
-    var isSelected:Boolean = false
+    var isSelected:Boolean = false,
+
+    @JvmField
+    @Exclude
+    var isLast:Boolean = false
+
+
 ){
     override fun toString(): String {
         return name.toString()

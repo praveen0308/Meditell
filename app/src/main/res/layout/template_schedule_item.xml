@@ -22,6 +22,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Areas to be visited : "
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +32,12 @@
         android:id="@+id/rv_areas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:listitem="@layout/template_area_list_item"
+        tools:itemCount="3"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

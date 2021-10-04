@@ -8,6 +8,7 @@ import com.jmm.brsap.meditell.repository.AreaRepository
 import com.jmm.brsap.meditell.repository.AuthRepository
 import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
 import com.jmm.brsap.meditell.repository.UserPreferencesRepository
+import com.jmm.brsap.meditell.util.NavigationEnum
 import com.jmm.brsap.meditell.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -27,6 +28,8 @@ class AddScheduleViewModel @Inject constructor(
     val activeStep = MutableLiveData(0)
     val activeDay = MutableLiveData(0)
     val mSchedule = MutableLiveData<List<Schedule>>()
+
+    val selectedScheduleType = MutableLiveData(NavigationEnum.SINGLE_DAY)
 
     var scheduleList= listOf<Schedule>()
 

@@ -60,12 +60,8 @@ class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitA
                     layoutManager = LinearLayoutManager(context)
                     adapter = currentDateAreaVisitAdapter
                 }
-                val areas = mutableListOf<Area>()
 
-                for (area in item.scheduleAreas) {
-                    areas.add(Area(areaId = area.first,name = area.second))
-                }
-                currentDateAreaVisitAdapter.setAreaList(areas)
+                currentDateAreaVisitAdapter.setAreaList(item.scheduleAreas)
             }
         }
     }

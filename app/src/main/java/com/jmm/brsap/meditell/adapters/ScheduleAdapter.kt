@@ -2,10 +2,12 @@ package com.jmm.brsap.meditell.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.databinding.TemplateScheduleItemBinding
 import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.util.convertDMY2EMDY
+import com.jmm.brsap.meditell.util.convertDMY2STD
 
 
 class ScheduleAdapter(private val mListener: ScheduleInterface) :
@@ -54,12 +56,19 @@ class ScheduleAdapter(private val mListener: ScheduleInterface) :
         fun bind(item: Schedule) {
             binding.apply {
 //                tvScheduleDate.text = convertEpochTimeToDate(item.date!!.seconds)
-                tvScheduleDate.text = convertDMY2EMDY(item.date!!)
-                val areas = StringBuilder()
-                for (area in item.scheduleAreas!!){
+                tvScheduleDate.text = convertDMY2STD(item.date!!)
+               /* val areas = StringBuilder()
+                for (area in item.scheduleAreas){
                     areas.append(area.second).append(",")
+                }*/
+//                tvAreas.text = areas.toString()
+                val selectedAreaAdapter = SelectedAreaAdapter()
+                rvAreas.apply {
+                    setHasFixedSize(true)
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = selectedAreaAdapter
                 }
-                tvAreas.text = areas.toString()
+                selectedAreaAdapter.setAreaList(item.scheduleAreas)
             }
         }
     }

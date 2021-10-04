@@ -31,16 +31,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:listitem="@layout/template_schedule_item"
-        android:layerType="software"/>
+        android:layerType="software"
+        />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/fab_add_new_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/colorPrimary"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_schedule_send_24" />
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_schedule"/>
+
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

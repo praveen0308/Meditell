@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.FragmentCreateScheduleBinding
@@ -60,7 +61,7 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
             else{
 
                 viewModel.scheduleList[viewModel.activeDay.value!!].areaVisits!!.add(selectedArea.areaId!!)
-                viewModel.scheduleList[viewModel.activeDay.value!!].scheduleAreas!!.add(Pair(selectedArea.areaId!!,selectedArea.name!!))
+                viewModel.scheduleList[viewModel.activeDay.value!!].scheduleAreas!!.add(Area(areaId = selectedArea.areaId!!,name = selectedArea.name!!))
             }
 
             scheduleVPAdapter.setScheduleList(viewModel.scheduleList)
@@ -77,7 +78,7 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
         scheduleDateAdapter = ScheduleDateAdapter(this)
         binding.rvDaysList.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            layoutManager = GridLayoutManager(context,3)
             adapter = scheduleDateAdapter
         }
         scheduleDateAdapter.setModelDayList(viewModel.scheduleList)
@@ -177,6 +178,10 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
 
 
     override fun onItemClick(item: Area) {
+
+    }
+
+    override fun onDayClick(item: Schedule) {
 
     }
 

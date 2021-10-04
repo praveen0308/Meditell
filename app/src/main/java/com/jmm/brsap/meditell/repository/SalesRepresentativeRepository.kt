@@ -57,7 +57,7 @@ class SalesRepresentativeRepository @Inject constructor(
                     val area =
                         db.collection(FirebaseDB.AREAS).document(areaId.toString()).get().await()
                     val areaName = area["name"]
-                    schedule.scheduleAreas.add(Pair(areaId, areaName.toString()))
+                    schedule.scheduleAreas.add(Area(areaId = areaId,name = areaName.toString()))
                 }
             }
 
