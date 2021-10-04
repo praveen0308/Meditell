@@ -4,29 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.type.DateTime
 import com.jmm.brsap.meditell.R
-import com.jmm.brsap.meditell.adapters.MenusAdapter
+import com.jmm.brsap.meditell.adapters.DashboardWidgetAdapter
 import com.jmm.brsap.meditell.databinding.FragmentHomeBinding
-import com.jmm.brsap.meditell.model.ModelMenu
+import com.jmm.brsap.meditell.model.WidgetModel
 import com.jmm.brsap.meditell.ui.currentdayactivity.CurrentActiveDayActivity
 import com.jmm.brsap.meditell.ui.schedule.ManageSchedule
 import com.jmm.brsap.meditell.util.*
 
 import com.jmm.brsap.meditell.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.sql.Time
 import java.util.*
 
 @AndroidEntryPoint
-class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
-    MenusAdapter.MenusInterface {
+class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), DashboardWidgetAdapter.DashboardWidgetInterface {
 
     private val viewModel by viewModels<HomeViewModel>()
-
-    private lateinit var menusAdapter: MenusAdapter
+    
+    private lateinit var dashboardWidgetAdapter: DashboardWidgetAdapter
     private var userId = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,10 +41,15 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     }
 
     private fun populateMenus() {
-        val menuList= mutableListOf<ModelMenu>()
-        menuList.add(ModelMenu("Manage Schedule", R.drawable.ic_baseline_schedule_24))
-        menuList.add(ModelMenu("Add new area", R.drawable.ic_baseline_schedule_24))
-        menusAdapter.setModelMenuList(menuList)
+        val widgetList= mutableListOf<WidgetModel>()
+        widgetList.add(WidgetModel(NavigationEnum.MANAGE_SCHEDULE,"Manage Schedule", R.drawable.ic_manage_schedule))
+        widgetList.add(WidgetModel(NavigationEnum.ADD_NEW_LOCATION,"Add new location", R.drawable.ic_add_new_location))
+        widgetList.add(WidgetModel(NavigationEnum.DAILY_CALL_RECORDING,"Daily Call Recording", R.drawable.ic_daily_call_recording))
+        widgetList.add(WidgetModel(NavigationEnum.ATTENDANCE_REGISTER,"Attendance Register", R.drawable.ic_attendance_register))
+        widgetList.add(WidgetModel(NavigationEnum.ADD_DOCTOR_PHARMACY,"Add Doctor or Pharmacy", R.drawable.ic_add_doctor_pharmacy))
+        widgetList.add(WidgetModel(NavigationEnum.SEARCH_DOCTOR_PHARMACY,"Search Doctor or Pharmacy", R.drawable.ic_search_doctor_pharmacy))
+
+        dashboardWidgetAdapter.setWidgetModelList(widgetList)
     }
 
     override fun subscribeObservers() {
@@ -82,13 +83,14 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     }
 
     private fun setupRvMenus(){
-        menusAdapter = MenusAdapter(this)
+        dashboardWidgetAdapter = DashboardWidgetAdapter( this)
         binding.rvMenus.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(),3)
-            adapter = menusAdapter
+            layoutManager = GridLayoutManager(requireContext(),2)
+            adapter = dashboardWidgetAdapter
         }
     }
+/*
 
     override fun onMenuClick(menuId: Int) {
         when(menuId){
@@ -97,6 +99,13 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
                 val sheet = AddNewArea()
                 sheet.show(parentFragmentManager,sheet.tag)
             }
+        }
+    }
+*/
+
+    override fun onItemClick(item: WidgetModel) {
+        when(item.id){
+            NavigationEnum.MANAGE_SCHEDULE->{startActivity(Intent(requireActivity(), ManageSchedule::class.java))}
         }
     }
 

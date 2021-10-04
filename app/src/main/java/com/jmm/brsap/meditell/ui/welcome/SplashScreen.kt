@@ -48,9 +48,9 @@ class SplashScreen : BaseFragment<FragmentSplashScreenBinding>(FragmentSplashScr
         viewModel.welcomeStatus.observe(viewLifecycleOwner,{
             if (it==LOGIN_DONE){
                 Timber.d(getTodayDate())
-                viewModel.getDayStatus(userId, getTodayDate())
-                /*findNavController().navigate(SplashScreenDirections.actionSplashScreenToMainDashboard())
-                requireActivity().finish()*/
+//                viewModel.getDayStatus(userId, getTodayDate())
+                findNavController().navigate(SplashScreenDirections.actionSplashScreenToMainDashboard())
+                requireActivity().finish()
             }else{
                 findNavController().navigate(SplashScreenDirections.actionSplashScreenToLogin())
             }

@@ -2,37 +2,35 @@ package com.jmm.brsap.meditell.ui.schedule
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
+import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.adapters.ScheduleAdapter
 import com.jmm.brsap.meditell.databinding.ActivityManageScheduleBinding
-import com.jmm.brsap.meditell.model.SalesRepresentative
-import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.util.BaseActivity
-import com.jmm.brsap.meditell.util.FirebaseDB
+import com.jmm.brsap.meditell.util.MyDividerItemDecoration
 import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.ManageScheduleViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import timber.log.Timber
+import java.security.AccessController.getContext
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class ManageSchedule : BaseActivity<ActivityManageScheduleBinding>(ActivityManageScheduleBinding::inflate),
+class ManageSchedule :
+    BaseActivity<ActivityManageScheduleBinding>(ActivityManageScheduleBinding::inflate),
     ScheduleAdapter.ScheduleInterface {
 
     private val viewModel by viewModels<ManageScheduleViewModel>()
-    @Inject
-    lateinit var  db : FirebaseFirestore
 
-    private lateinit var scheduleAdapter:ScheduleAdapter
+    @Inject
+    lateinit var db: FirebaseFirestore
+
+    private lateinit var scheduleAdapter: ScheduleAdapter
     private var userId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +42,8 @@ class ManageSchedule : BaseActivity<ActivityManageScheduleBinding>(ActivityManag
     }
 
     override fun subscribeObservers() {
-        viewModel.userId.observe(this,{
-            userId =it
+        viewModel.userId.observe(this, {
+            userId = it
             viewModel.getSchedule(userId)
         })
         viewModel.schedules.observe(this, { _result ->
@@ -69,17 +67,29 @@ class ManageSchedule : BaseActivity<ActivityManageScheduleBinding>(ActivityManag
         })
     }
 
-    private fun setupRvSchedules(){
+    private fun setupRvSchedules() {
         scheduleAdapter = ScheduleAdapter(this)
         binding.rvSchedule.apply {
             setHasFixedSize(true)
             val layoutManager = LinearLayoutManager(context)
-            val dividerItemDecoration = DividerItemDecoration(context,
-                layoutManager.orientation)
-            addItemDecoration(dividerItemDecoration)
+            val decorator = MyDividerItemDecoration(AppCompatResources.getDrawable(context,R.drawable.rv_horizontal_line))
+            addItemDecoration(decorator)
+            /*val dividerItemDecoration = MyDividerItemDecoration(
+                context,
+                layoutManager.orientation
+            )
+            addItemDecoration(dividerItemDecoration.apply {
+                AppCompatResources.getDrawable(context, R.drawable.rv_horizontal_line)?.let {
+                    setDrawable(it)
+                }
+            })*/
+
+
+
+
 
             this.layoutManager = layoutManager
-            adapter =scheduleAdapter
+            adapter = scheduleAdapter
         }
     }
 }

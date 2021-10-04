@@ -2,9 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.Meditell" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/red_500</item>
-        <item name="colorPrimaryVariant">@color/red_700</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/white</item>
+
+        <item name="fontFamily">@font/spartan_font</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -13,4 +15,34 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ButtonTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:fontWeight">700</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="MyCustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/edittext_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/edittext_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/edittext_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/edittext_radius</item>
+    </style>
+
+
+    <style name="MyMaterialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:textAppearance">@style/ButtonTextAppearance</item>
+    </style>
+
+    <style name="HeadingTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.3</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:fontFamily">@font/spartan_font</item>
+
+    </style>
+
 </resources>

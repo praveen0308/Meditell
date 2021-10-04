@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="12dp"
+    android:paddingHorizontal="24dp"
     android:paddingVertical="8dp">
 
     <TextView
@@ -15,22 +15,23 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="24th September 2021" />
+        tools:text="24th September 2021"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Areas to be visited : "
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_schedule_date" />
 
-    <TextView
-        android:id="@+id/tv_areas"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_areas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        tools:text="Area 1, Area 2, Area 3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
