@@ -81,12 +81,14 @@ class SelectInteractedWith :
 
     override fun onRowClick(item: Any) {
         if (item is Doctor){
-            viewModel.selectedInteractedWith = UserTypes.DOCTOR
+            viewModel.selectedInteractedWith = "doctor"
+            viewModel.selectedInteractiveInfo = "Doctor : ${item.name.toString()}"
             viewModel.selectedInteractedId = item.doctorId!!
         }
         else if (item is Pharmacy){
-            viewModel.selectedInteractedWith = UserTypes.PHARMACY
-            viewModel.selectedInteractedId = item.pharmacyId
+            viewModel.selectedInteractedWith = "pharmacy"
+            viewModel.selectedInteractiveInfo = "Pharmacy : ${item.address.toString()}"
+            viewModel.selectedInteractedId = item.pharmacyId!!
         }
 
 //        findNavController().navigate(SelectInteractedWithDirections.actionSelectInteractedWith2ToSubmitInteraction2())

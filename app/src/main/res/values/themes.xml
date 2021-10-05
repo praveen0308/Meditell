@@ -29,6 +29,33 @@
         <item name="boxCornerRadiusTopEnd">@dimen/edittext_radius</item>
         <item name="boxCornerRadiusTopStart">@dimen/edittext_radius</item>
     </style>
+    <style name="ActvStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:inputType">none</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@null</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="MyTIETStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
 
     <style name="MyCustomExposedDD" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="boxCornerRadiusBottomEnd">@dimen/edittext_radius</item>
@@ -41,6 +68,8 @@
     <style name="MyMaterialButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:textAppearance">@style/ButtonTextAppearance</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
     </style>
 
     <style name="ActionButtonStyle" parent="Widget.MaterialComponents.Button">
@@ -50,14 +79,35 @@
         <item name="android:insetTop">0dp</item>
     </style>
 
-
     <style name="HeadingTextAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">18sp</item>
-        <item name="android:letterSpacing">0.3</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.2</item>
         <item name="android:textStyle">bold</item>
         <item name="textAllCaps">true</item>
         <item name="android:fontFamily">@font/spartan_font</item>
 
     </style>
+
+    <style name="MyTitle1" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="fontWeight">600</item>
+        <item name="font">@font/spartan_semibold</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/spartan_font</item>
+
+    </style>
+    <style name="MyTitle2" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textStyle">bold</item>
+        <item name="font">@font/spartan_semibold</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/spartan_font</item>
+
+    </style>
+
+
 
 </resources>

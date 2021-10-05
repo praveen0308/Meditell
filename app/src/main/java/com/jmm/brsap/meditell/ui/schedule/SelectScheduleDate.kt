@@ -32,6 +32,8 @@ class SelectScheduleDate :
 
     private var startDate = ""
     private var endDate = ""
+
+    private var selectedDate = NavigationEnum.SINGLE_DAY
     override fun onResume() {
         super.onResume()
         viewModel.activeStep.postValue(0)
@@ -41,11 +43,11 @@ class SelectScheduleDate :
         setUpRvSelectedDates()
         binding.apply {
             cdSingleDay.setOnClickListener {
-                viewModel.selectedScheduleType.postValue(NavigationEnum.SINGLE_DAY)
+                viewModel.selectedScheduleType.value = NavigationEnum.SINGLE_DAY
             }
 
             cdWeekly.setOnClickListener {
-                viewModel.selectedScheduleType.postValue(NavigationEnum.WEEKLY)
+                viewModel.selectedScheduleType.value = NavigationEnum.WEEKLY
             }
         }
         binding.btnSelectDates.setOnClickListener {
@@ -133,25 +135,29 @@ class SelectScheduleDate :
     }
     override fun subscribeObservers() {
         viewModel.selectedScheduleType.observe(viewLifecycleOwner,{
-            when(it){
-                NavigationEnum.SINGLE_DAY->{
-                    binding.apply {
-                        cdSingleDay.strokeColor = ContextCompat.getColor(requireContext(),R.color.colorPrimary)
-                        cdWeekly.setStrokeColor(null)
-                        cdWeekly.strokeColor = ContextCompat.getColor(requireContext(),R.color.material_on_surface_stroke)
-                    }
-                }
-                NavigationEnum.WEEKLY->{
-                    binding.apply {
-                        cdSingleDay.setStrokeColor(null)
-                        cdSingleDay.strokeColor = ContextCompat.getColor(requireContext(),R.color.material_on_surface_stroke)
-                        cdWeekly.strokeColor = ContextCompat.getColor(requireContext(),R.color.colorPrimary)
-                    }
-                }
-                else -> {
+
+            if (it==NavigationEnum.SINGLE_DAY){
+                showToast("Single day")
+                binding.apply {
+                    cdSingleDay.strokeColor = ContextCompat.getColor(requireContext(),R.color.colorPrimary)
+                    cdSingleDay.strokeWidth = 5
+                    cdWeekly.strokeWidth = 0
+                    cdWeekly.setStrokeColor(null)
+                    cdWeekly.strokeColor = ContextCompat.getColor(requireContext(),R.color.material_on_surface_stroke)
+
 
                 }
+            }else{
+                showToast("Weekly")
+                binding.apply {
+                    cdSingleDay.setStrokeColor(null)
+                    cdSingleDay.strokeColor = ContextCompat.getColor(requireContext(),R.color.material_on_surface_stroke)
+                    cdSingleDay.strokeWidth = 0
+                    cdWeekly.strokeColor = ContextCompat.getColor(requireContext(),R.color.colorPrimary)
+                    cdWeekly.strokeWidth = 5
+                }
             }
+
         })
         viewModel.userId.observe(viewLifecycleOwner,{
             Timber.d("UserID : $it")
@@ -167,7 +173,7 @@ class SelectScheduleDate :
         }
     }
 
-    override fun onDayClick(item: Schedule) {
+    override fun onDayClick(position: Int, item: Schedule) {
 
     }
 

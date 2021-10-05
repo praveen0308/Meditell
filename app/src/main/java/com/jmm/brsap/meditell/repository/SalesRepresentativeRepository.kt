@@ -57,7 +57,8 @@ class SalesRepresentativeRepository @Inject constructor(
                     val area =
                         db.collection(FirebaseDB.AREAS).document(areaId.toString()).get().await()
                     val areaName = area["name"]
-                    schedule.scheduleAreas.add(Area(areaId = areaId,name = areaName.toString()))
+                    val addressInfo = area["addressInfo"]
+                    schedule.scheduleAreas.add(Area(areaId = areaId,name = areaName.toString(),addressInfo = addressInfo.toString()))
                 }
             }
 
@@ -95,7 +96,9 @@ class SalesRepresentativeRepository @Inject constructor(
                 .collection("schedule").document(scheduleDate)
             val currentDaySchedule = currentDayScheduleRef.get().await()
             Timber.d("current Day schedule : $currentDaySchedule")
+
             val schedule = currentDaySchedule.toObject<Schedule>()
+
             Timber.d("current schedule : $schedule")
             Timber.d("current day status : ${schedule!!.dayStatus}")
             emit(schedule.dayStatus)

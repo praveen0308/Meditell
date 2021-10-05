@@ -159,11 +159,11 @@
 
     <Button
         android:id="@+id/btn_select_dates"
+        style="@style/MyMaterialButtonStyle"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Select dates"
-        style="@style/MyMaterialButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_types" />

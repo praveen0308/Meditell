@@ -54,7 +54,7 @@ class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitA
         fun bind(item: Schedule) {
             binding.apply {
                 val currentDateAreaVisitAdapter =
-                    CurrentDateAreaVisitAdapter(currentDateAreaVisitInterface)
+                    SelectedAreaAdapter()
                 rvCurrentDateSchedule.apply {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(context)

@@ -52,7 +52,7 @@ class SelectedAreaAdapter() :
 
         fun bind(item: Area) {
             binding.apply {
-                tvTitle.text = item.name
+                tvTitle.text = item.addressInfo
                 divider70.isVisible = !item.isLast
             }
         }

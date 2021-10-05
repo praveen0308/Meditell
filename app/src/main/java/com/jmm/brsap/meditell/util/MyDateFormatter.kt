@@ -50,6 +50,11 @@ fun getTodayDate():String{
     return getDaysAgo(0)
 }
 
+fun getCurrentDateTime():String{
+    return SDF_DMYHMS.format(Date()).toString()
+}
+
+
 
 fun getDaysAgo(daysAgo: Int): String {
     val calendar = Calendar.getInstance()

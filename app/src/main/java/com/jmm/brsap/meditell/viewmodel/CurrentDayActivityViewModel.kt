@@ -25,7 +25,8 @@ class CurrentDayActivityViewModel @Inject constructor(
 
     val userId = userPreferencesRepository.userId.asLiveData()
     var selectedAreaId = 0
-    var selectedInteractedWith = UserTypes.DOCTOR
+    var selectedInteractedWith = "doctor"
+    var selectedInteractiveInfo = ""
     var interactionType = "call"
     var selectedInteractedId = 0
     var selectedImageUrl = ""

@@ -1,6 +1,7 @@
 package com.jmm.brsap.meditell.ui.currentdayactivity
 
 import android.Manifest
+import android.R
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -25,6 +26,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
+import android.widget.ArrayAdapter
 import androidx.annotation.Nullable
 import java.io.File
 import java.io.IOException
@@ -41,6 +43,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.model.InteractionModel
 import com.jmm.brsap.meditell.util.Status
 
@@ -64,6 +67,7 @@ class SubmitInteraction : BaseFragment<FragmentSubmitInteractionBinding>(Fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeDialog()
+        populateTypeAdapter()
         storageReference = FirebaseStorage.getInstance().reference
         binding.btnUploadPicture.setOnClickListener {
             uploadOptionsDialog.show()
@@ -73,6 +77,7 @@ class SubmitInteraction : BaseFragment<FragmentSubmitInteractionBinding>(Fragmen
 //            showToast("clicked")
             viewModel.addNewInteraction(InteractionModel(
                 interactedWith = viewModel.selectedInteractedId,
+                interactionWasWith = viewModel.selectedInteractedWith,
                 areaId = viewModel.selectedAreaId,
                 type = viewModel.interactionType,
                 interactedBy = userId,
@@ -118,8 +123,8 @@ class SubmitInteraction : BaseFragment<FragmentSubmitInteractionBinding>(Fragmen
                 Status.SUCCESS -> {
                     _result._data?.let {
                         if (it){
-                          /*  showToast("submitted successfully !!")
-                            findNavController().navigate(SubmitInteractionDirections.actionSubmitInteraction2ToActiveDay2())*/
+                            showToast("submitted successfully !!")
+                            findNavController().navigate(SubmitInteractionDirections.actionSubmitInteraction2ToActiveDay2())
                         }
                     }
                     displayLoading(false)
@@ -136,6 +141,20 @@ class SubmitInteraction : BaseFragment<FragmentSubmitInteractionBinding>(Fragmen
             }
         })
     }
+
+    private fun populateTypeAdapter(){
+        val types = listOf("call","visit")
+
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, types)
+        binding.actvInteractionType.threshold = 1 //start searching for values after typing first character
+        binding.actvInteractionType.setAdapter(arrayAdapter)
+
+        binding.actvInteractionType.setOnItemClickListener { parent, view, position, id ->
+            val area = parent.getItemAtPosition(position) as String
+            viewModel.interactionType=area
+        }
+    }
+
 
     private fun askCameraPermissions() {
         if (ContextCompat.checkSelfPermission(

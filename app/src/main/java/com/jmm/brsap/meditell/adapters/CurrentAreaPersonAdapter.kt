@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.TemplateDoctorRowBinding
+import com.jmm.brsap.meditell.databinding.TemplatePharmacyRowBinding
 import com.jmm.brsap.meditell.model.*
 
 class CurrentAreaPersonAdapter(private val mListener: CurrentAreaPersonInterface) :
@@ -17,7 +19,7 @@ class CurrentAreaPersonAdapter(private val mListener: CurrentAreaPersonInterface
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentAreaPersonViewHolder {
         return CurrentAreaPersonViewHolder(
-            TemplateDoctorRowBinding.inflate(
+            TemplatePharmacyRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -40,7 +42,7 @@ class CurrentAreaPersonAdapter(private val mListener: CurrentAreaPersonInterface
     }
 
     inner class CurrentAreaPersonViewHolder(
-        val binding: TemplateDoctorRowBinding,
+        val binding: TemplatePharmacyRowBinding,
         private val mListener: CurrentAreaPersonInterface
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -56,11 +58,14 @@ class CurrentAreaPersonAdapter(private val mListener: CurrentAreaPersonInterface
             binding.apply {
                 if (item is Doctor){
                     tvName.text = item.name
-                    ivRow.setImageResource(R.drawable.ic_baseline_person_24)
+                    tvAddress.isVisible = true
+                    imageView3.setImageResource(R.drawable.doctor_1)
                 }
                 else if (item is Pharmacy){
                     tvName.text = item.pharmacyName
-                    ivRow.setImageResource(R.drawable.ic_baseline_add_box_24)
+                    tvAddress.isVisible = true
+                    tvAddress.text = item.pharmacyName
+                    imageView3.setImageResource(R.drawable.pharmacy_1)
                 }
             }
         }

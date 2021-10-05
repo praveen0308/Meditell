@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.R
+import com.jmm.brsap.meditell.databinding.LayoutCurrentDateScheduleBinding
+import com.jmm.brsap.meditell.databinding.LayoutCurrentDayLocationVisitBinding
 import com.jmm.brsap.meditell.databinding.TemplateAreaListItemBinding
 import com.jmm.brsap.meditell.model.*
 
@@ -19,7 +21,7 @@ class CurrentDateAreaVisitAdapter(private val mListener: CurrentDateAreaVisitInt
         viewType: Int
     ): CurrentDateAreaVisitViewHolder {
         return CurrentDateAreaVisitViewHolder(
-            TemplateAreaListItemBinding.inflate(
+            LayoutCurrentDayLocationVisitBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -42,12 +44,12 @@ class CurrentDateAreaVisitAdapter(private val mListener: CurrentDateAreaVisitInt
     }
 
     inner class CurrentDateAreaVisitViewHolder(
-        val binding: TemplateAreaListItemBinding,
+        val binding: LayoutCurrentDayLocationVisitBinding,
         private val mListener: CurrentDateAreaVisitInterface
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            itemView.setOnClickListener {
+            binding.btnVisitLocation.setOnClickListener {
                 mListener.onItemClick(mList[adapterPosition])
             }
 
@@ -56,8 +58,7 @@ class CurrentDateAreaVisitAdapter(private val mListener: CurrentDateAreaVisitInt
 
         fun bind(item: Area) {
             binding.apply {
-                tvTitle.text  = item.name
-                divider70.isVisible = !item.isLast
+                tvTitle.text  = item.addressInfo
             }
         }
     }

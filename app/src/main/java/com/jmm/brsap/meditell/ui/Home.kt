@@ -10,6 +10,7 @@ import com.jmm.brsap.meditell.adapters.DashboardWidgetAdapter
 import com.jmm.brsap.meditell.databinding.FragmentHomeBinding
 import com.jmm.brsap.meditell.model.WidgetModel
 import com.jmm.brsap.meditell.ui.currentdayactivity.CurrentActiveDayActivity
+import com.jmm.brsap.meditell.ui.doctorpharmacy.AddDoctorOrPharmacy
 import com.jmm.brsap.meditell.ui.schedule.ManageSchedule
 import com.jmm.brsap.meditell.util.*
 
@@ -96,7 +97,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), Da
         when(menuId){
             0->{startActivity(Intent(requireActivity(), ManageSchedule::class.java))}
             1->{
-                val sheet = AddNewArea()
+                val sheet = AddNewLocation()
                 sheet.show(parentFragmentManager,sheet.tag)
             }
         }
@@ -106,6 +107,8 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), Da
     override fun onItemClick(item: WidgetModel) {
         when(item.id){
             NavigationEnum.MANAGE_SCHEDULE->{startActivity(Intent(requireActivity(), ManageSchedule::class.java))}
+            NavigationEnum.ADD_DOCTOR_PHARMACY->{startActivity(Intent(requireActivity(), AddDoctorOrPharmacy::class.java))}
+            NavigationEnum.ADD_NEW_LOCATION->{startActivity(Intent(requireActivity(), AddNewLocation::class.java))}
         }
     }
 

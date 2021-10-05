@@ -25,9 +25,8 @@ class InteractionRepository @Inject constructor(private val db: FirebaseFirestor
             Timber.d("New Interaction ID :$newInteractionId")
             interaction.interactionId = newInteractionId
             Timber.d("Interaction to be added : $interaction")
-            val response = db.collection(FirebaseDB.INTERACTIONS).document("$newInteractionId").set(interaction)
-            if (response.isSuccessful) emit(true)
-            else emit(false)
+            val response = db.collection(FirebaseDB.INTERACTIONS).document("$newInteractionId").set(interaction).await()
+            emit(true)
         }.flowOn(Dispatchers.IO)
     }
 }

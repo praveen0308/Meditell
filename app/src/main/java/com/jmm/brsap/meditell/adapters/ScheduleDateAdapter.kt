@@ -66,7 +66,7 @@ class ScheduleDateAdapter(private val mListener: ScheduleDateInterface, private 
 
         init {
             itemView.setOnClickListener {
-                mListener.onDayClick(mList[adapterPosition])
+                mListener.onDayClick(adapterPosition,mList[adapterPosition])
             }
 
         }
@@ -117,7 +117,7 @@ class ScheduleDateAdapter(private val mListener: ScheduleDateInterface, private 
     }
 
     interface ScheduleDateInterface {
-        fun onDayClick(item: Schedule)
+        fun onDayClick(position: Int,item: Schedule)
     }
 
 

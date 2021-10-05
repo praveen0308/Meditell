@@ -49,7 +49,9 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRvDates()
+        binding.vpScheduleFrame.isUserInputEnabled = false
         setupVPSchedule()
+
         viewModel.getCities()
 
         binding.btnAdd.setOnClickListener {
@@ -61,7 +63,7 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
             else{
 
                 viewModel.scheduleList[viewModel.activeDay.value!!].areaVisits!!.add(selectedArea.areaId!!)
-                viewModel.scheduleList[viewModel.activeDay.value!!].scheduleAreas!!.add(Area(areaId = selectedArea.areaId!!,name = selectedArea.name!!))
+                viewModel.scheduleList[viewModel.activeDay.value!!].scheduleAreas.add(Area(areaId = selectedArea.areaId!!,name = selectedArea.name!!,addressInfo = selectedArea.addressInfo!!))
             }
 
             scheduleVPAdapter.setScheduleList(viewModel.scheduleList)
@@ -181,8 +183,9 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
 
     }
 
-    override fun onDayClick(item: Schedule) {
-
+    override fun onDayClick(position:Int,item: Schedule) {
+        viewModel.activeDay.postValue(position)
+        binding.vpScheduleFrame.currentItem = position
     }
 
 }
