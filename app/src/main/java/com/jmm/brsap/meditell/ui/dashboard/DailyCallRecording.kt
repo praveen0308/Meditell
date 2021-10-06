@@ -13,6 +13,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DailyCallRecording : BaseFragment<FragmentDailyCallRecordingBinding>(FragmentDailyCallRecordingBinding::inflate) {
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainDashboard).setToolbarTitle("Daily Call Recording")
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

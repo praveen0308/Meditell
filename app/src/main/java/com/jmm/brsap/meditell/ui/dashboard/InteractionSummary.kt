@@ -12,6 +12,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class InteractionSummary : BaseFragment<FragmentInteractionSummaryBinding>(FragmentInteractionSummaryBinding::inflate) {
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainDashboard).setToolbarTitle("Summary")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

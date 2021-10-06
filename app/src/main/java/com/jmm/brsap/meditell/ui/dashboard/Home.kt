@@ -29,6 +29,10 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     private lateinit var dashboardWidgetAdapter: DashboardWidgetAdapter
     private var userId = ""
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainDashboard).setToolbarTitle("Meditell")
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRvMenus()
@@ -49,10 +53,6 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
     private fun populateMenus() {
         val widgetList = mutableListOf<WidgetModel>()
         widgetList.add(

@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import com.jmm.brsap.meditell.R
+import com.jmm.brsap.meditell.databinding.ActivityMainDashboardBinding
+import com.jmm.brsap.meditell.util.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainDashboard : AppCompatActivity() {
+class MainDashboard : BaseActivity<ActivityMainDashboardBinding>(ActivityMainDashboardBinding::inflate) {
     private var doubleBackToExitPressedOnce = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_dashboard)
+
     }
 
     override fun onBackPressed() {
@@ -29,4 +31,13 @@ class MainDashboard : AppCompatActivity() {
             }, 2000)
         }
     }
+
+    fun setToolbarTitle(title:String){
+        binding.toolbarMainDashboard.setTitle(title)
+    }
+    override fun subscribeObservers() {
+
+    }
+
+
 }

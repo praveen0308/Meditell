@@ -23,7 +23,10 @@ class AttendanceRegister : BaseFragment<FragmentAttendanceRegisterBinding>(Fragm
     private val viewModel by viewModels<AttendanceRegisterViewModel>()
     private var userId =""
     private lateinit var scheduleAdapter: ScheduleAdapter
-
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainDashboard).setToolbarTitle("Attendance Register")
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRvSchedules()
