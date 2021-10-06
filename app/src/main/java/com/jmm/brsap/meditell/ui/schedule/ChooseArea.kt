@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmm.brsap.meditell.adapters.ChooseAreaAdapter
 import com.jmm.brsap.meditell.databinding.FragmentChooseAreaBinding
 import com.jmm.brsap.meditell.model.Area
-import com.jmm.brsap.meditell.ui.AddNewLocation
 import com.jmm.brsap.meditell.util.BaseBottomSheetDialogFragment
 import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.AddScheduleViewModel

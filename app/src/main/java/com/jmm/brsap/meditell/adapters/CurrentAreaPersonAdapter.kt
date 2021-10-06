@@ -58,7 +58,7 @@ class CurrentAreaPersonAdapter(private val mListener: CurrentAreaPersonInterface
             binding.apply {
                 if (item is Doctor){
                     tvName.text = item.name
-                    tvAddress.isVisible = true
+                    tvAddress.isVisible = false
                     imageView3.setImageResource(R.drawable.doctor_1)
                 }
                 else if (item is Pharmacy){

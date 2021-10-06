@@ -2,21 +2,14 @@ package com.jmm.brsap.meditell.ui.welcome
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.FragmentLoginBinding
+import com.jmm.brsap.meditell.ui.dashboard.MainDashboard
 import com.jmm.brsap.meditell.util.BaseFragment
 import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 @AndroidEntryPoint
@@ -72,7 +65,7 @@ class Login : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) 
                             viewModel.updateUserId(it.userId!!)
                         }finally {
                             showToast("Login successful !!!")
-                            startActivity(Intent(requireActivity(),MainDashboard::class.java))
+                            startActivity(Intent(requireActivity(), MainDashboard::class.java))
                             requireActivity().finish()
                         }
 

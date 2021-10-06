@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@drawable/bg_rect_dashed"
-    android:padding="12dp">
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="16dp">
 
     <TextView
         android:id="@+id/tv_title"
@@ -22,7 +23,7 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:id="@+id/btn_visit_location"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Visit location"
         android:textSize="14sp"
         android:textStyle="bold"

@@ -37,7 +37,7 @@
     </fragment>
     <activity
         android:id="@+id/mainDashboard"
-        android:name="com.jmm.brsap.meditell.ui.welcome.MainDashboard"
+        android:name="com.jmm.brsap.meditell.ui.dashboard.MainDashboard"
         android:label="activity_main_dashboard"
         tools:layout="@layout/activity_main_dashboard" />
     <activity

@@ -1,21 +1,12 @@
-package com.jmm.brsap.meditell.ui
+package com.jmm.brsap.meditell.ui.dashboard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.FragmentAddNewAreaBinding
 import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.util.BaseActivity
-import com.jmm.brsap.meditell.util.BaseBottomSheetDialogFragment
-import com.jmm.brsap.meditell.util.BaseFragment
 import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.ManageAreaViewModel
 import dagger.hilt.android.AndroidEntryPoint

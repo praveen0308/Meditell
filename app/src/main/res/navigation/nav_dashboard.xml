@@ -7,16 +7,41 @@
 
     <fragment
         android:id="@+id/home2"
-        android:name="com.jmm.brsap.meditell.ui.Home"
+        android:name="com.jmm.brsap.meditell.ui.dashboard.Home"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_home2_to_activeDay"
             app:destination="@id/activeDay" />
+        <action
+            android:id="@+id/action_home2_to_dailyCallRecording"
+            app:destination="@id/dailyCallRecording" />
+        <action
+            android:id="@+id/action_home2_to_attendanceRegister"
+            app:destination="@id/attendanceRegister" />
     </fragment>
     <fragment
         android:id="@+id/activeDay"
         android:name="com.jmm.brsap.meditell.ui.currentdayactivity.ActiveDay"
         android:label="fragment_active_day"
         tools:layout="@layout/fragment_active_day" />
+    <fragment
+        android:id="@+id/attendanceRegister"
+        android:name="com.jmm.brsap.meditell.ui.dashboard.AttendanceRegister"
+        android:label="fragment_attendance_register"
+        tools:layout="@layout/fragment_attendance_register" >
+        <action
+            android:id="@+id/action_attendanceRegister_to_interactionSummary"
+            app:destination="@id/interactionSummary" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyCallRecording"
+        android:name="com.jmm.brsap.meditell.ui.dashboard.DailyCallRecording"
+        android:label="fragment_daily_call_recording"
+        tools:layout="@layout/fragment_daily_call_recording" />
+    <fragment
+        android:id="@+id/interactionSummary"
+        android:name="com.jmm.brsap.meditell.ui.dashboard.InteractionSummary"
+        android:label="fragment_interaction_summary"
+        tools:layout="@layout/fragment_interaction_summary" />
 </navigation>

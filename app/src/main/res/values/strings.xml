@@ -4,5 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="dummy_address">Pharmacy : C-42 B-55, Mandir Marg, Mahanagar Extension, Mahanagar, Lucknow, Uttar Pradesh</string>
+    <string name="dummy_text">Lacus gravida elit lorem ornare dolor ullamcorper elementum. Donec eu aliquet pharetra malesuada phasellus integer non id. Ligula sit phasellus elit morbi fames. Mattis enim purus quis eleifend volutpat augue. Nisl sit dignissim lacinia orci aliquet elementum id etiam.Ligula sit phasellus elit morbi fames. Mattis enim purus quis eleifend volutpat augue. Nisl sit dignissim lacinia orci aliquet elementum id etiam.</string>
 
 </resources>

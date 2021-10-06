@@ -1,4 +1,4 @@
-package com.jmm.brsap.meditell.ui.welcome
+package com.jmm.brsap.meditell.ui.dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

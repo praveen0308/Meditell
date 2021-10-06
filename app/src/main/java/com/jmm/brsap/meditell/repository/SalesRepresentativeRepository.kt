@@ -1,8 +1,6 @@
 package com.jmm.brsap.meditell.repository
 
-import androidx.lifecycle.asLiveData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.jmm.brsap.meditell.model.Area
@@ -16,11 +14,9 @@ import com.jmm.brsap.meditell.util.FirebaseDB.PHARMACY
 import com.jmm.brsap.meditell.util.FirebaseDB.SALES_REPRESENTATIVES
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import okhttp3.internal.wait
 import timber.log.Timber
 import javax.inject.Inject
 

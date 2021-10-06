@@ -98,4 +98,32 @@ class CurrentDayActivityViewModel @Inject constructor(
                 }
         }
     }
+
+    private val _markAttendanceResponse = MutableLiveData<Resource<Boolean>>()
+    val markAttendanceResponse: LiveData<Resource<Boolean>> = _markAttendanceResponse
+
+    fun markAttendanceForTheDay(
+        userId: String,
+        scheduleDate: String,
+        dateTime: String,
+        action: String
+    ) {
+        viewModelScope.launch {
+            salesRepresentativeRepository
+                .markAttendance(userId, scheduleDate, dateTime, action)
+                .onStart {
+                    _markAttendanceResponse.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _markAttendanceResponse.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    if (it) _markAttendanceResponse.postValue(Resource.Success(it))
+                    else _markAttendanceResponse.postValue(Resource.Error("Something went wrong !!!"))
+                }
+        }
+    }
+
 }

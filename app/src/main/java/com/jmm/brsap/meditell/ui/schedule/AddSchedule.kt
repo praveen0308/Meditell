@@ -1,14 +1,11 @@
 package com.jmm.brsap.meditell.ui.schedule
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.ActivityAddScheduleBinding
-import com.jmm.brsap.meditell.ui.welcome.MainDashboard
 import com.jmm.brsap.meditell.util.BaseActivity
 import com.jmm.brsap.meditell.util.Status
 import com.jmm.brsap.meditell.viewmodel.AddScheduleViewModel

@@ -91,6 +91,6 @@ class SelectInteractedWith :
             viewModel.selectedInteractedId = item.pharmacyId!!
         }
 
-//        findNavController().navigate(SelectInteractedWithDirections.actionSelectInteractedWith2ToSubmitInteraction2())
+        findNavController().navigate(R.id.action_selectInteractedWith2_to_submitInteraction2)
     }
 }

@@ -1,5 +1,6 @@
 package com.jmm.brsap.meditell.ui.currentdayactivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -9,12 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmm.brsap.meditell.adapters.CurrentDateAreaVisitAdapter
 import com.jmm.brsap.meditell.databinding.FragmentActiveDayBinding
 import com.jmm.brsap.meditell.model.Area
-import com.jmm.brsap.meditell.util.BaseFragment
-import com.jmm.brsap.meditell.util.Status
-import com.jmm.brsap.meditell.util.convertDMY2EMDY
-import com.jmm.brsap.meditell.util.getTodayDate
+import com.jmm.brsap.meditell.util.*
 import com.jmm.brsap.meditell.viewmodel.CurrentDayActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class ActiveDay : BaseFragment<FragmentActiveDayBinding>(FragmentActiveDayBinding::inflate),
@@ -28,7 +27,10 @@ class ActiveDay : BaseFragment<FragmentActiveDayBinding>(FragmentActiveDayBindin
         super.onViewCreated(view, savedInstanceState)
         setupRvAreas()
         binding.tvTime.text = convertDMY2EMDY(getTodayDate())
-
+        binding.btnEndDay.setOnClickListener {
+            viewModel.markAttendanceForTheDay(userId, getTodayDate(),
+                getCurrentDateTime(), FirebaseDB.CHECKIN)
+        }
         binding.fabAddNewSchedule.setOnClickListener {
 
         }
@@ -45,6 +47,31 @@ class ActiveDay : BaseFragment<FragmentActiveDayBinding>(FragmentActiveDayBindin
                 Status.SUCCESS -> {
                     _result._data?.let {areas->
                       currentDateAreaVisitAdapter.setAreaList(areas)
+                    }
+                    displayLoading(false)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
+                }
+                Status.ERROR -> {
+                    displayLoading(false)
+                    _result.message?.let {
+                        displayError(it)
+                    }
+                }
+            }
+        })
+
+        viewModel.markAttendanceResponse.observe(this, { _result ->
+            when (_result.status) {
+                Status.SUCCESS -> {
+                    _result._data?.let {
+                        if (it){
+                            val intent = Intent(requireActivity(),CurrentActiveDayActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
+
                     }
                     displayLoading(false)
                 }
