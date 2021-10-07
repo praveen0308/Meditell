@@ -26,6 +26,7 @@
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_add_new_pharmacy.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_add_schedule.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_attendance_register.xml" value="0.1921875" />
+        <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_call_recording_summary.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_choose_area.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_confirm_schedule.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/fragment_create_schedule.xml" value="0.22" />
@@ -43,7 +44,9 @@
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/layout_current_day_location_visit.xml" value="0.25" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_area_list_item.xml" value="0.25" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_attendance_item.xml" value="0.1921875" />
+        <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_call_recording_doctor.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_call_recording_item.xml" value="0.1921875" />
+        <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_call_recording_pharmacy.xml" value="0.1921875" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_choose_area_item.xml" value="0.33" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_date_chip.xml" value="0.22" />
         <entry key="..\:/Apps 2021/Meditell/app/src/main/res/layout/template_doctor_row.xml" value="0.22" />

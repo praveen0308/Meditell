@@ -29,19 +29,39 @@
         android:id="@+id/attendanceRegister"
         android:name="com.jmm.brsap.meditell.ui.dashboard.AttendanceRegister"
         android:label="fragment_attendance_register"
-        tools:layout="@layout/fragment_attendance_register" >
-        <action
-            android:id="@+id/action_attendanceRegister_to_interactionSummary"
-            app:destination="@id/interactionSummary" />
-    </fragment>
+        tools:layout="@layout/fragment_attendance_register" />
     <fragment
         android:id="@+id/dailyCallRecording"
         android:name="com.jmm.brsap.meditell.ui.dashboard.DailyCallRecording"
         android:label="fragment_daily_call_recording"
-        tools:layout="@layout/fragment_daily_call_recording" />
+        tools:layout="@layout/fragment_daily_call_recording" >
+        <action
+            android:id="@+id/action_dailyCallRecording_to_callRecordingSummary"
+            app:destination="@id/callRecordingSummary" />
+    </fragment>
     <fragment
         android:id="@+id/interactionSummary"
         android:name="com.jmm.brsap.meditell.ui.dashboard.InteractionSummary"
         android:label="fragment_interaction_summary"
-        tools:layout="@layout/fragment_interaction_summary" />
+        tools:layout="@layout/fragment_interaction_summary" >
+        <argument
+            android:name="interactionId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/callRecordingSummary"
+        android:name="com.jmm.brsap.meditell.ui.dashboard.CallRecordingSummary"
+        android:label="fragment_call_recording_summary"
+        tools:layout="@layout/fragment_call_recording_summary" >
+        <action
+            android:id="@+id/action_callRecordingSummary_to_interactionSummary"
+            app:destination="@id/interactionSummary" />
+        <argument
+            android:name="areaId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="date"
+            app:argType="string" />
+    </fragment>
 </navigation>

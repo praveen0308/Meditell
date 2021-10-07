@@ -68,6 +68,8 @@ class SubmitInteraction : BaseFragment<FragmentSubmitInteractionBinding>(Fragmen
         super.onViewCreated(view, savedInstanceState)
         initializeDialog()
         populateTypeAdapter()
+
+        binding.tvInteractionWith.text = viewModel.selectedInteractiveInfo
         storageReference = FirebaseStorage.getInstance().reference
         binding.btnUploadPicture.setOnClickListener {
             uploadOptionsDialog.show()

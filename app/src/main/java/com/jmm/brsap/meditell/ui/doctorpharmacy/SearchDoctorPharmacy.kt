@@ -4,6 +4,8 @@ import android.R
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmm.brsap.meditell.adapters.CurrentAreaPersonAdapter
@@ -31,6 +33,9 @@ class SearchDoctorPharmacy :
         viewModel.getDoctorPharmacies()
         viewModel.getCities()
 
+        binding.etSearchText.doOnTextChanged { text, start, before, count ->
+            binding.layoutSearchFilters.isVisible = text.toString().isEmpty()
+        }
         binding.btnSearch.setOnClickListener {
             viewModel.getDoctorPharmacies(selectedArea)
         }

@@ -11,6 +11,7 @@
         android:id="@+id/tv_schedule_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,4 +40,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         tools:listitem="@layout/template_area_list_item"
         tools:itemCount="3"/>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAppearance="@style/TvStatusStyle"
+        app:layout_constraintStart_toStartOf="@+id/rv_areas"
+        app:layout_constraintTop_toBottomOf="@+id/rv_areas" />
 </androidx.constraintlayout.widget.ConstraintLayout>

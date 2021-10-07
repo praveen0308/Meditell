@@ -3,10 +3,7 @@ package com.jmm.brsap.meditell.repository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
-import com.jmm.brsap.meditell.model.Area
-import com.jmm.brsap.meditell.model.Doctor
-import com.jmm.brsap.meditell.model.Pharmacy
-import com.jmm.brsap.meditell.model.Schedule
+import com.jmm.brsap.meditell.model.*
 import com.jmm.brsap.meditell.util.FirebaseDB
 import com.jmm.brsap.meditell.util.FirebaseDB.AREAS
 import com.jmm.brsap.meditell.util.FirebaseDB.DOCTORS
@@ -42,6 +39,24 @@ class SalesRepresentativeRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun submitReport(userId: String, reportModel: ReportModel): Flow<Boolean> {
+        return flow {
+
+            Timber.d(userId.toString())
+
+            try {
+
+                db.collection(SALES_REPRESENTATIVES).document(userId)
+                    .collection("report").document(reportModel.reportMonth!!).set(reportModel)
+
+            } finally {
+                emit(true)
+            }
+
+        }.flowOn(Dispatchers.IO)
+    }
+
+
     suspend fun getSchedule(userId: String): Flow<List<Schedule>> {
         return flow {
             val result = db.collection(SALES_REPRESENTATIVES).document(userId)
@@ -54,10 +69,33 @@ class SalesRepresentativeRepository @Inject constructor(
                         db.collection(FirebaseDB.AREAS).document(areaId.toString()).get().await()
                     val areaName = area["name"]
                     val addressInfo = area["addressInfo"]
-                    schedule.scheduleAreas.add(Area(areaId = areaId,name = areaName.toString(),addressInfo = addressInfo.toString()))
+                    schedule.scheduleAreas.add(
+                        Area(
+                            areaId = areaId,
+                            name = areaName.toString(),
+                            addressInfo = addressInfo.toString()
+                        )
+                    )
                 }
             }
 
+            emit(schedules)
+
+        }.flowOn(Dispatchers.Default)
+    }
+
+    suspend fun getDailyCallRecordings(userId: String): Flow<List<Schedule>> {
+        return flow {
+            val result = db.collection(SALES_REPRESENTATIVES).document(userId)
+                .collection("schedule").get().await()
+            val schedules = result.toObjects<Schedule>()
+
+            for (schedule in schedules) {
+                val responseInteractions = db.collection(FirebaseDB.INTERACTIONS)
+                    .whereEqualTo("interactedOn", schedule.date).get().await()
+                val interactions = responseInteractions.toObjects<InteractionModel>()
+                schedule.interactions = interactions.toMutableList()
+            }
             emit(schedules)
 
         }.flowOn(Dispatchers.Default)
@@ -75,8 +113,8 @@ class SalesRepresentativeRepository @Inject constructor(
                 .collection("schedule").document(scheduleDate)
             scheduleRef.update(action, dateTime).await()
 
-            if (action=="checkIn") scheduleRef.update("dayStatus",1).await()
-            else scheduleRef.update("dayStatus",2).await()
+            if (action == "checkIn") scheduleRef.update("dayStatus", 1).await()
+            else scheduleRef.update("dayStatus", 2).await()
 
             emit(true)
         }.flowOn(Dispatchers.IO)
@@ -112,7 +150,7 @@ class SalesRepresentativeRepository @Inject constructor(
             val schedule = currentDaySchedule.toObject<Schedule>()
             val areas = mutableListOf<Area>()
             schedule?.let {
-                for(areaId in schedule.areaVisits!!){
+                for (areaId in schedule.areaVisits!!) {
                     val area = db.collection(AREAS).document(areaId.toString()).get().await()
                     areas.add(area.toObject()!!)
                 }
@@ -122,25 +160,24 @@ class SalesRepresentativeRepository @Inject constructor(
     }
 
     suspend fun getCurrentAreaDoctorsAndPharmacy(
-        areaId:Int
+        areaId: Int
     ): Flow<List<Any>> {
         return flow {
-            val rDoctors = db.collection(DOCTORS).whereEqualTo("areaId",areaId).get().await()
-            val rPharmacies = db.collection(PHARMACY).whereEqualTo("areaId",areaId).get().await()
-            val doctors =rDoctors.toObjects<Doctor>()
-            val pharmacies =rPharmacies.toObjects<Pharmacy>()
+            val rDoctors = db.collection(DOCTORS).whereEqualTo("areaId", areaId).get().await()
+            val rPharmacies = db.collection(PHARMACY).whereEqualTo("areaId", areaId).get().await()
+            val doctors = rDoctors.toObjects<Doctor>()
+            val pharmacies = rPharmacies.toObjects<Pharmacy>()
             val areaPersons = mutableListOf<Any>()
-            if (!doctors.isNullOrEmpty()){
+            if (!doctors.isNullOrEmpty()) {
                 areaPersons.addAll(doctors)
             }
-            if (!pharmacies.isNullOrEmpty()){
+            if (!pharmacies.isNullOrEmpty()) {
                 areaPersons.addAll(pharmacies)
             }
 
             emit(areaPersons)
         }.flowOn(Dispatchers.IO)
     }
-
 
 
 }

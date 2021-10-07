@@ -1,6 +1,9 @@
 package com.jmm.brsap.meditell.ui.dashboard
 
+import android.app.Activity.RESULT_OK
+import android.content.ContentResolver
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -19,16 +22,29 @@ import com.jmm.brsap.meditell.util.*
 import com.jmm.brsap.meditell.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import android.os.Build
+import android.util.Log
+import android.webkit.MimeTypeMap
+import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.view.isVisible
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.jmm.brsap.meditell.model.ReportModel
+import java.lang.Math.random
+import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     DashboardWidgetAdapter.DashboardWidgetInterface {
 
+    private val PICKED_FILE_CODE = 100
     private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var dashboardWidgetAdapter: DashboardWidgetAdapter
     private var userId = ""
-
+    var storageReference: StorageReference? = null
     override fun onResume() {
         super.onResume()
         (requireActivity() as MainDashboard).setToolbarTitle("Meditell")
@@ -37,6 +53,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
         super.onViewCreated(view, savedInstanceState)
         setupRvMenus()
         populateMenus()
+        storageReference = FirebaseStorage.getInstance().reference
         binding.tvTime.text = convertDMY2EMDY(getTodayDate())
 
         binding.btnStartDay.setOnClickListener {
@@ -98,6 +115,14 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
             )
         )
 
+        widgetList.add(
+            WidgetModel(
+                NavigationEnum.SEND_REPORT,
+                "Send Report to Admin",
+                R.drawable.img_send_report
+            )
+        )
+
         dashboardWidgetAdapter.setWidgetModelList(widgetList)
     }
 
@@ -130,13 +155,49 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
                 }
             }
         })
+
+        viewModel.reportSubmitted.observe(this, { _result ->
+            when (_result.status) {
+                Status.SUCCESS -> {
+                    _result._data?.let {
+                        if (it) {
+                            showToast("Report submitted successfully !!!")
+                        }
+
+                    }
+                    displayLoading(false)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
+                }
+                Status.ERROR -> {
+                    displayLoading(false)
+                    _result.message?.let {
+                        displayError(it)
+                    }
+                }
+            }
+        })
     }
 
     private fun setupRvMenus() {
         dashboardWidgetAdapter = DashboardWidgetAdapter(this)
         binding.rvMenus.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), 2)
+//            val spanCount = lcm(2,2,2,1)
+            val layoutManager = GridLayoutManager(context, 2)
+            this.layoutManager = layoutManager
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    val numberOfColumns: Int = when (position) {
+                        6->2
+                        else -> 1
+                    }
+                    return numberOfColumns
+                }
+            }
+
+//            layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = dashboardWidgetAdapter
         }
     }
@@ -173,6 +234,86 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
             NavigationEnum.DAILY_CALL_RECORDING -> {
                 findNavController().navigate(HomeDirections.actionHome2ToDailyCallRecording())
             }
+            NavigationEnum.SEND_REPORT->{
+//                val mimeTypes = arrayOf(
+//                    "image/*",
+//                    "application/pdf",
+//                    "application/msword",
+//                    "application/vnd.ms-powerpoint",
+//                    "application/vnd.ms-excel",
+//                    "text/plain"
+//                )
+//
+//                val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                intent.addCategory(Intent.CATEGORY_OPENABLE)
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    intent.type = if (mimeTypes.size == 1) mimeTypes[0] else "*/*"
+//                    if (mimeTypes.size > 0) {
+//                        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+//                    }
+//                } else {
+//                    var mimeTypesStr = ""
+//                    for (mimeType in mimeTypes) {
+//                        mimeTypesStr += "$mimeType|"
+//                    }
+//                    intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
+//                }
+
+                val gallery = Intent()
+                gallery.type = "application/*"
+                gallery.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(gallery, 100)
+//                startActivityForResult(Intent.createChooser(gallery, "Choose File"), 0)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PICKED_FILE_CODE){
+            if (resultCode==RESULT_OK){
+                val contentUri: Uri? = data!!.data
+                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val fileName = "REPORT_" + timeStamp + "." + getFileExt(contentUri!!)
+                Log.d("tag", "onActivityResult: Picked file Uri:  $fileName")
+
+                uploadFileToFirebase(fileName, contentUri)
+            }
+        }
+
+    }
+
+    private fun getFileExt(contentUri: Uri): String? {
+        val c: ContentResolver = requireActivity().contentResolver
+        val mime = MimeTypeMap.getSingleton()
+        return mime.getExtensionFromMimeType(c.getType(contentUri))
+    }
+
+    private fun uploadFileToFirebase(name: String, contentUri: Uri) {
+        val image: StorageReference = storageReference!!.child("pictures/$name")
+        image.putFile(contentUri).addOnSuccessListener {
+            image.downloadUrl.addOnSuccessListener { uri ->
+                viewModel.selectedFileUrl = uri.toString()
+                viewModel.submitReport(userId, ReportModel(
+                    reportMonth = "OCT2021${(1..10000).random()}",
+                    uploadedOn = getCurrentDateTime(),
+                    reportUrl = viewModel.selectedFileUrl
+                ))
+                Log.d(
+                    "tag",
+                    "onSuccess: Uploaded File URl is $uri"
+                )
+            }
+            Toast.makeText(requireContext(), "File is uploaded.", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(
+                requireContext(),
+                "Upload Failled.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

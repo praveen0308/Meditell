@@ -9,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmm.brsap.meditell.R
+import com.jmm.brsap.meditell.adapters.AttendanceRegisterAdapter
 import com.jmm.brsap.meditell.adapters.ScheduleAdapter
 import com.jmm.brsap.meditell.databinding.FragmentAttendanceRegisterBinding
 import com.jmm.brsap.meditell.util.BaseFragment
@@ -19,10 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AttendanceRegister : BaseFragment<FragmentAttendanceRegisterBinding>(FragmentAttendanceRegisterBinding::inflate),
-    ScheduleAdapter.ScheduleInterface {
+     AttendanceRegisterAdapter.ScheduleInterface {
     private val viewModel by viewModels<AttendanceRegisterViewModel>()
     private var userId =""
-    private lateinit var scheduleAdapter: ScheduleAdapter
+    private lateinit var attendanceRegisterAdapter: AttendanceRegisterAdapter
     override fun onResume() {
         super.onResume()
         (requireActivity() as MainDashboard).setToolbarTitle("Attendance Register")
@@ -41,7 +42,7 @@ class AttendanceRegister : BaseFragment<FragmentAttendanceRegisterBinding>(Fragm
             when (_result.status) {
                 Status.SUCCESS -> {
                     _result._data?.let {
-                        scheduleAdapter.setScheduleList(it)
+                        attendanceRegisterAdapter.setScheduleList(it)
                     }
                     displayLoading(false)
                 }
@@ -59,7 +60,7 @@ class AttendanceRegister : BaseFragment<FragmentAttendanceRegisterBinding>(Fragm
     }
 
     private fun setupRvSchedules() {
-        scheduleAdapter = ScheduleAdapter(this)
+        attendanceRegisterAdapter = AttendanceRegisterAdapter(this)
         binding.rvAttendance.apply {
             setHasFixedSize(true)
             val layoutManager = LinearLayoutManager(context)
@@ -67,7 +68,7 @@ class AttendanceRegister : BaseFragment<FragmentAttendanceRegisterBinding>(Fragm
             addItemDecoration(decorator)
 
             this.layoutManager = layoutManager
-            adapter = scheduleAdapter
+            adapter = attendanceRegisterAdapter
         }
     }
 }

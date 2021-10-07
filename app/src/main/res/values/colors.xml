@@ -10,6 +10,7 @@
     <color name="colorPrimary">#D61E3F</color>
     <color name="colorPrimary10">#FBD0D8</color>
     <color name="colorPrimary30">#4DD61E3F</color>
+    <color name="colorPositive">#3CC127</color>
 
     <color name="colorGrey">#E5E5E5</color>
     <color name="colorTransparent">#00000000</color>

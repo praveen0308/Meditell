@@ -18,7 +18,11 @@ data class Area(
 
     @JvmField
     @Exclude
-    var isLast:Boolean = false
+    var isLast:Boolean = false,
+
+    @JvmField
+    @Exclude
+    var dateVisit:String?=null  // this field is made for daily call recordings to track on which date we are looking for
 
 
 ){

@@ -32,7 +32,8 @@ data class Schedule (
     *
     * */
 
-    var dayStatus:Int=0
+    var dayStatus:Int=0,
+    var interactions:MutableList<InteractionModel>?= mutableListOf()
 ){
 
 }

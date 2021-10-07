@@ -1,6 +1,7 @@
 package com.jmm.brsap.meditell.viewmodel
 
 import androidx.lifecycle.*
+import com.jmm.brsap.meditell.model.ReportModel
 import com.jmm.brsap.meditell.model.SalesRepresentative
 import com.jmm.brsap.meditell.repository.AuthRepository
 import com.jmm.brsap.meditell.repository.SalesRepresentativeRepository
@@ -24,6 +25,7 @@ class HomeViewModel @Inject constructor(
     val userId = userPreferencesRepository.userId.asLiveData()
     val welcomeStatus = userPreferencesRepository.welcomeStatus.asLiveData()
 
+    var selectedFileUrl = ""
 
     fun clearUserInfo() {
         viewModelScope.launch {
@@ -75,6 +77,32 @@ class HomeViewModel @Inject constructor(
                 .collect {
                     if (it) _markAttendanceResponse.postValue(Resource.Success(it))
                     else _markAttendanceResponse.postValue(Resource.Error("Something went wrong !!!"))
+                }
+        }
+    }
+
+
+    private val _reportSubmitted = MutableLiveData<Resource<Boolean>>()
+    val reportSubmitted: LiveData<Resource<Boolean>> = _reportSubmitted
+
+    fun submitReport(
+        userId: String,
+        reportModel: ReportModel
+    ) {
+        viewModelScope.launch {
+            salesRepresentativeRepository
+                .submitReport(userId, reportModel)
+                .onStart {
+                    _reportSubmitted.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _reportSubmitted.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    if (it) _reportSubmitted.postValue(Resource.Success(it))
+                    else _reportSubmitted.postValue(Resource.Error("Something went wrong !!!"))
                 }
         }
     }
