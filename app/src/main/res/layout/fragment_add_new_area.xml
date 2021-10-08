@@ -30,30 +30,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="56dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
-                style="@style/MyCustomTextInputLayout"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_search_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/ic_round_search_24"
-                app:endIconTint="@color/colorPrimary"
-                >
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                style="@style/MyMaterialCardViewShadowStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/MyTIETStyle"
+                <EditText
+                    android:id="@+id/et_search_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Search location" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@color/colorTransparent"
+                    android:drawableEnd="@drawable/ic_round_search_24"
+                    android:drawableTint="@color/colorPrimary"
+                    android:hint="Search location"
+                    android:textSize="14sp"/>
+            </com.google.android.material.card.MaterialCardView>
+
             <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="16dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/img_map" />
+                app:srcCompat="@drawable/img_map"
+                android:layout_marginHorizontal="16dp"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_add_location"
                 style="@style/MyMaterialButtonStyle"
@@ -62,6 +73,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Add Location"
                 android:textAllCaps="false"
+                android:layout_marginHorizontal="16dp"
                  />
 
             <ImageView
@@ -70,6 +82,7 @@
                 android:layout_height="5dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/rv_horizontal_line"
+                android:layerType="software"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_days_list" />
@@ -80,45 +93,58 @@
                 android:layout_height="wrap_content"
                 style="@style/HeadingTextAppearance"
                 android:text="Or Add location manually"
-                android:textAlignment="center"/>
-
+                android:textAlignment="center"
+                android:layout_marginTop="24dp"/>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout10"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/til_cities"
+                style="@style/MyCustomExposedDD"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView5">
 
                 <AutoCompleteTextView
                     android:id="@+id/actv_cities"
+                    style="@style/ActvStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:paddingHorizontal="12dp"
-                    android:text="Select City"
-                    android:textAllCaps="false" />
+                    android:text="Select City" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout3"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/til_area_name"
+                style="@style/MyCustomTextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                >
+                android:layout_height="55dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:prefixText="Dr.">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_area_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Area Name" />
+                    android:hint="Location Name"
+                    style="@style/MyTIETStyle"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout4"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/til_area_address"
+                style="@style/MyCustomTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -127,17 +153,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="Area Address"
-                    android:lines="3" />
+                    android:lines="3"
+                    style="@style/MyTIETStyle"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_submit"
+                android:id="@+id/btn_submit_location"
+                style="@style/MyMaterialButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Add Location"
                 android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="48dp"
                 />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

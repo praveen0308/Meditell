@@ -142,10 +142,10 @@ class AddNewPharmacy : BaseFragment<FragmentAddNewPharmacyBinding>(FragmentAddNe
     private fun populateAreasAdapter(cityList: MutableList<Area>) {
         val arrayAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, cityList)
-        binding.actvArea.threshold = 1 //start searching for values after typing first character
-        binding.actvArea.setAdapter(arrayAdapter)
+        binding.actvAreas.threshold = 1 //start searching for values after typing first character
+        binding.actvAreas.setAdapter(arrayAdapter)
 
-        binding.actvArea.setOnItemClickListener { parent, view, position, id ->
+        binding.actvAreas.setOnItemClickListener { parent, view, position, id ->
             val area = parent.getItemAtPosition(position) as Area
             selectedAreaId = area.areaId!!
         }

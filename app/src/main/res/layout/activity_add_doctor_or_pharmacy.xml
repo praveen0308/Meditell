@@ -32,45 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    <!--<com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_doctor"
-        style="@style/ActiveTabButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Doctor"
-        app:layout_constraintEnd_toStartOf="@+id/divider"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_pharmacy"
-        style="@style/UnActiveTabButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pharmacy"
-        android:textAppearance="@style/HeadingTextAppearance"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_doctor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/divider"
-        app:layout_constraintTop_toTopOf="@+id/btn_doctor" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="2dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_doctor"
-        app:layout_constraintEnd_toStartOf="@+id/btn_pharmacy"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_doctor"
-        app:layout_constraintTop_toTopOf="@+id/btn_doctor" />
--->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_add_doctor_pharmacy"
         android:layout_width="0dp"

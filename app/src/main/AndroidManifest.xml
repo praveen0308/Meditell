@@ -39,6 +39,10 @@
         <activity
             android:name=".ui.dashboard.MainDashboard"
             android:exported="true" />
+
+        <activity
+            android:name=".ui.dashboard.AddNewLocation"
+            android:exported="true" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

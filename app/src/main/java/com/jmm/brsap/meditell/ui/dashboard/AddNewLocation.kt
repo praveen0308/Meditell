@@ -21,7 +21,7 @@ class AddNewLocation : BaseActivity<FragmentAddNewAreaBinding>(FragmentAddNewAre
         super.onCreate(savedInstanceState)
         viewModel.getCities()
         binding.apply {
-            btnSubmit.setOnClickListener {
+            btnSubmitLocation.setOnClickListener {
                 val areaName =etAreaName.text.toString().trim()
                 val areaAddress =etAreaAddress.text.toString().trim()
                 viewModel.addNewArea(Area(
