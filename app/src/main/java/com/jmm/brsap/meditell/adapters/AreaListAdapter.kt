@@ -4,26 +4,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.TemplateAreaListItemBinding
 import com.jmm.brsap.meditell.model.*
 
-class SelectedAreaAdapter(private val selectedAreaInterface: SelectedAreaInterface) :
-    RecyclerView.Adapter<SelectedAreaAdapter.SelectedAreaViewHolder>() {
+class AreaListAdapter() :
+    RecyclerView.Adapter<AreaListAdapter.AreaListViewHolder>() {
 
 
     private val mList = mutableListOf<Area>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectedAreaViewHolder {
-        return SelectedAreaViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaListViewHolder {
+        return AreaListViewHolder(
             TemplateAreaListItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),selectedAreaInterface
+            )
         )
     }
 
-    override fun onBindViewHolder(holder: SelectedAreaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AreaListViewHolder, position: Int) {
         holder.bind(mList[position])
     }
 
@@ -37,27 +38,22 @@ class SelectedAreaAdapter(private val selectedAreaInterface: SelectedAreaInterfa
         notifyDataSetChanged()
     }
 
-    inner class SelectedAreaViewHolder(
-        val binding: TemplateAreaListItemBinding,
-        private val mListener:SelectedAreaInterface
+    inner class AreaListViewHolder(
+        val binding: TemplateAreaListItemBinding
+
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.imgClose.setOnClickListener {
-                mListener.onRemoveClick(mList[adapterPosition])
-            }
+
         }
 
         fun bind(item: Area) {
             binding.apply {
                 tvTitle.text = item.addressInfo
                 divider70.isVisible = !item.isLast
+                imgClose.isVisible = false
             }
         }
-    }
-
-    interface SelectedAreaInterface {
-        fun onRemoveClick(item: Area)
     }
 
 

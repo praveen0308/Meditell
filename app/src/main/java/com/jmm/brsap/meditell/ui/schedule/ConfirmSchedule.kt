@@ -12,6 +12,7 @@ import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.adapters.ScheduleAdapter
 import com.jmm.brsap.meditell.databinding.FragmentConfirmScheduleBinding
 import com.jmm.brsap.meditell.databinding.FragmentCreateScheduleBinding
+import com.jmm.brsap.meditell.model.Schedule
 import com.jmm.brsap.meditell.util.BaseFragment
 import com.jmm.brsap.meditell.viewmodel.AddScheduleViewModel
 
@@ -47,5 +48,9 @@ class ConfirmSchedule : BaseFragment<FragmentConfirmScheduleBinding>(FragmentCon
         }
 
         scheduleAdapter.setScheduleList(viewModel.scheduleList)
+    }
+
+    override fun onEditClick(item: Schedule) {
+
     }
 }

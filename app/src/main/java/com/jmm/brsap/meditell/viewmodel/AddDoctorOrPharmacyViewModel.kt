@@ -68,6 +68,27 @@ class AddDoctorOrPharmacyViewModel @Inject constructor(
         }
     }
 
+    private val _degreeAdded = MutableLiveData<Resource<Int>>()
+    val degreeAdded: LiveData<Resource<Int>> = _degreeAdded
+
+    fun addNewDegree(degree: Degree) {
+        viewModelScope.launch {
+            doctorRepository
+                .addNewDegree(degree)
+                .onStart {
+                    _degreeAdded.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _degreeAdded.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _degreeAdded.postValue(Resource.Success(it))
+                }
+        }
+    }
+
     private val _pharmacyAdded = MutableLiveData<Resource<Boolean>>()
     val pharmacyAdded: LiveData<Resource<Boolean>> = _pharmacyAdded
 

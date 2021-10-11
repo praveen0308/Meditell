@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.TemplateAttendanceItemBinding
-import com.jmm.brsap.meditell.databinding.TemplateScheduleItemBinding
 import com.jmm.brsap.meditell.model.Schedule
-import com.jmm.brsap.meditell.util.convertDMY2EMDY
 import com.jmm.brsap.meditell.util.convertDMY2STD
 
 
@@ -65,7 +63,7 @@ class AttendanceRegisterAdapter(private val mListener: ScheduleInterface) :
                     areas.append(area.second).append(",")
                 }*/
 //                tvAreas.text = areas.toString()
-                val selectedAreaAdapter = SelectedAreaAdapter()
+                val selectedAreaAdapter = AreaListAdapter()
                 rvAreas.apply {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(context)

@@ -12,7 +12,7 @@
         android:id="@+id/til_username"
         style="@style/MyCustomTextInputLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         app:endIconMode="clear_text"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,13 +25,14 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_baseline_person_24"
             android:drawablePadding="10dp"
-            android:hint="User Id" />
+            android:hint="User Id"
+            style="@style/MyTIETStyle"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
         style="@style/MyCustomTextInputLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginTop="16dp"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,8 @@
             android:drawableStart="@drawable/ic_baseline_lock_24"
             android:drawablePadding="10dp"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            style="@style/MyTIETStyle"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -90,8 +92,10 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
         android:src="@drawable/img_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

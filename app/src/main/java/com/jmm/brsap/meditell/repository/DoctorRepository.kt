@@ -45,6 +45,26 @@ class DoctorRepository @Inject constructor(private val db: FirebaseFirestore) {
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun addNewDegree(degree: Degree): Flow<Int> {
+        return flow {
+            val lastAddedDegree =
+                db.collection(FirebaseDB.DEGREE).orderBy("degreeId", Query.Direction.DESCENDING)
+                    .limit(1).get().await()
+            Timber.d("Last added degree : ${lastAddedDegree.documents}")
+            val lastDegree = lastAddedDegree.toObjects(Degree::class.java)
+            Timber.d("Converted into degrees : $lastDegree")
+            val newDegreeId = if (lastDegree.isEmpty()) 100 else lastDegree[0].degreeId!! + 1
+
+            Timber.d("New Degree ID :$newDegreeId")
+            degree.degreeId = newDegreeId
+            Timber.d("Degree to be added : $degree")
+            val response = db.collection(FirebaseDB.DEGREE).document("$newDegreeId").set(degree)
+            if (response.isSuccessful) emit(newDegreeId)
+            else emit(0)
+
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun getDoctorsAndPharmacy(
         areaId: Int
     ): Flow<List<Any>> {

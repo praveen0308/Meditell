@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="red_200">#FC8686</color>
-    <color name="red_500">#E62B2B</color>
-    <color name="red_700">#DF1111</color>
-    <color name="teal_200">#DF1111</color>
+    <color name="red_500">#78B833</color>
+    <color name="red_700">#78B833</color>
+    <color name="teal_200">#78B833</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#D61E3F</color>
-    <color name="colorPrimary10">#FBD0D8</color>
+    <color name="colorPrimary">#78B833</color>
+    <color name="colorPrimary10">#E0FBD0</color>
     <color name="colorPrimary30">#4DD61E3F</color>
     <color name="colorPositive">#3CC127</color>
 

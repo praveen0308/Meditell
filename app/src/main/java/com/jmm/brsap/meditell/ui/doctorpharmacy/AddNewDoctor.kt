@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.ActivityAddDoctorOrPharmacyBinding
@@ -39,25 +40,34 @@ class AddNewDoctor :
 
         binding.apply {
 
-
             btnSubmit.setOnClickListener {
+
                 val doctorName = etDoctorName.text.toString().trim()
                 val clinicAddress = etClinicAddress.text.toString().trim()
                 val contact = etContact.text.toString().trim()
 
-                viewModel.addNewDoctor(
-                    Doctor(
-                        name = doctorName,
-                        address = clinicAddress,
-                        contactNo = contact,
-                        cityId = selectedCityId,
-                        areaId = selectedAreaId,
-                        degree = selectedDegreeId,
-                        dateOfBirth = dob,
-                        addedBy = userId,
-                        addedOn = getCurrentDateTime()
+                if (selectedDegreeId==10000){
+                    viewModel.addNewDegree(
+                        Degree(
+                        name = etDegreeName.text.toString().trim()
+                    ))
+                }else{
+                    viewModel.addNewDoctor(
+                        Doctor(
+                            name = doctorName,
+                            address = clinicAddress,
+                            contactNo = contact,
+                            cityId = selectedCityId,
+                            areaId = selectedAreaId,
+                            degree = selectedDegreeId,
+                            dateOfBirth = dob,
+                            addedBy = userId,
+                            addedOn = getCurrentDateTime()
+                        )
                     )
-                )
+                }
+
+
             }
         }
     }
@@ -77,6 +87,41 @@ class AddNewDoctor :
                         } else {
                             showToast("Something went wrong!!!")
                         }
+                    }
+                    displayLoading(false)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
+                }
+                Status.ERROR -> {
+                    displayLoading(false)
+                    _result.message?.let {
+                        displayError(it)
+                    }
+                }
+            }
+        })
+
+        viewModel.degreeAdded.observe(this, { _result ->
+            when (_result.status) {
+                Status.SUCCESS -> {
+                    _result._data?.let {
+                        val doctorName = binding.etDoctorName.text.toString().trim()
+                        val clinicAddress = binding.etClinicAddress.text.toString().trim()
+                        val contact = binding.etContact.text.toString().trim()
+                        viewModel.addNewDoctor(
+                            Doctor(
+                                name = doctorName,
+                                address = clinicAddress,
+                                contactNo = contact,
+                                cityId = selectedCityId,
+                                areaId = selectedAreaId,
+                                degree = selectedDegreeId,
+                                dateOfBirth = dob,
+                                addedBy = userId,
+                                addedOn = getCurrentDateTime()
+                            )
+                        )
                     }
                     displayLoading(false)
                 }
@@ -154,6 +199,7 @@ class AddNewDoctor :
     }
 
     private fun populateDegreeAdapter(degrees: MutableList<Degree>) {
+        degrees.add(Degree(degreeId = 10000,name = "Other"))
         val arrayAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, degrees)
         binding.actvDegree.threshold = 1 //start searching for values after typing first character
@@ -162,6 +208,7 @@ class AddNewDoctor :
         binding.actvDegree.setOnItemClickListener { parent, view, position, id ->
             val degree = parent.getItemAtPosition(position) as Degree
             selectedDegreeId = degree.degreeId!!
+            binding.tilDegreeName.isVisible = selectedDegreeId==10000
 
         }
     }

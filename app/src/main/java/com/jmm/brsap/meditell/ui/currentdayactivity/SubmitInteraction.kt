@@ -145,7 +145,7 @@ class SubmitInteraction : BaseFragment<FragmentSubmitInteractionBinding>(Fragmen
     }
 
     private fun populateTypeAdapter(){
-        val types = listOf("call","visit")
+        val types = listOf("call","reminder call")
 
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, types)
         binding.actvInteractionType.threshold = 1 //start searching for values after typing first character

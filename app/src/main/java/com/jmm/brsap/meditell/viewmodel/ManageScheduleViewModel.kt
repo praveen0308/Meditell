@@ -46,4 +46,92 @@ class ManageScheduleViewModel @Inject constructor(
                 }
         }
     }
+
+    private val _areas = MutableLiveData<Resource<List<Area>>>()
+    val areas: LiveData<Resource<List<Area>>> = _areas
+
+    fun getCurrentDayAreas(userId:String,scheduleDate:String) {
+        viewModelScope.launch {
+            salesRepresentativeRepository
+                .getCurrentDayAreas(userId, scheduleDate)
+                .onStart {
+                    _areas.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _areas.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _areas.postValue(Resource.Success(it))
+
+                }
+        }
+    }
+
+    private val _cities = MutableLiveData<Resource<List<City>>>()
+    val cities: LiveData<Resource<List<City>>> = _cities
+
+    fun getCities() {
+        viewModelScope.launch {
+            areaRepository
+                .getCities()
+                .onStart {
+                    _cities.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _cities.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _cities.postValue(Resource.Success(it))
+                }
+        }
+    }
+
+    private val _areaList = MutableLiveData<Resource<List<Area>>>()
+    val areaList: LiveData<Resource<List<Area>>> = _areaList
+
+    fun getAreas(cityId:Int=0) {
+        viewModelScope.launch {
+            areaRepository
+                .getAreas(cityId)
+                .onStart {
+                    _areaList.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _areaList.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _areaList.postValue(Resource.Success(it))
+
+                }
+        }
+    }
+
+    private val _updatedSchedule = MutableLiveData<Resource<Boolean>>()
+    val updatedSchedule: LiveData<Resource<Boolean>> = _updatedSchedule
+
+    fun updateDaySchedule(userId:String,date:String,areas:List<Int>) {
+        viewModelScope.launch {
+            salesRepresentativeRepository
+                .updateDaySchedule(userId,date, areas)
+                .onStart {
+                    _updatedSchedule.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _updatedSchedule.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _updatedSchedule.postValue(Resource.Success(it))
+
+                }
+        }
+    }
+
 }

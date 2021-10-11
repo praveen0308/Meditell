@@ -39,6 +39,23 @@ class SalesRepresentativeRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun updateDaySchedule(userId: String, date: String, areas: List<Int>): Flow<Boolean> {
+        return flow {
+
+            Timber.d(userId.toString())
+
+            try {
+
+                db.collection(SALES_REPRESENTATIVES).document(userId)
+                    .collection("schedule").document(date).update("areaVisits",areas)
+
+            } finally {
+                emit(true)
+            }
+
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun submitReport(userId: String, reportModel: ReportModel): Flow<Boolean> {
         return flow {
 
@@ -158,6 +175,7 @@ class SalesRepresentativeRepository @Inject constructor(
             emit(areas)
         }.flowOn(Dispatchers.IO)
     }
+
 
     suspend fun getCurrentAreaDoctorsAndPharmacy(
         areaId: Int

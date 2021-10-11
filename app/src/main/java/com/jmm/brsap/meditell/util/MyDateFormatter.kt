@@ -35,7 +35,7 @@ fun convertDMY2EMDY(date:String):String{
 fun convertDMY2STD(date: String):String{
     val formatter = SimpleDateFormat("dd-MM-yyyy")
     val date = formatter.parse(date)
-    val desiredFormat = SimpleDateFormat("dd MMMM, yyyy | EEEE").format(date)
+    val desiredFormat = SimpleDateFormat("dd MMM, yyyy | EEEE").format(date)
     return desiredFormat
 }
 fun convertEpochTimeToDate(seconds:Long,sdf:SimpleDateFormat = SDF_EDMY):String{

@@ -6,7 +6,8 @@
     app:cardCornerRadius="@dimen/dashboard_widget_radius"
     app:strokeWidth="2dp"
     app:strokeColor="@color/colorPrimary"
-    android:layout_margin="12dp"
+    android:layout_margin="8dp"
+
     app:cardElevation="8dp">
 
 

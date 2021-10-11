@@ -13,16 +13,13 @@ import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.FragmentCreateScheduleBinding
 import com.jmm.brsap.meditell.util.BaseFragment
 import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
-import com.jmm.brsap.meditell.adapters.ScheduleAdapter
-import com.jmm.brsap.meditell.adapters.ScheduleDateAdapter
-import com.jmm.brsap.meditell.adapters.ScheduleVPAdapter
 import com.jmm.brsap.meditell.model.ModelDay
 import com.jmm.brsap.meditell.viewmodel.AddScheduleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.jmm.brsap.meditell.adapters.CurrentDateAreaVisitAdapter
+import com.jmm.brsap.meditell.adapters.*
 import com.jmm.brsap.meditell.model.Area
 import com.jmm.brsap.meditell.model.City
 import com.jmm.brsap.meditell.model.Schedule
@@ -33,7 +30,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreateScheduleBinding::inflate),
     ScheduleDateAdapter.ScheduleDateInterface,
-    CurrentDateAreaVisitAdapter.CurrentDateAreaVisitInterface {
+    SelectedAreaAdapter.SelectedAreaInterface {
 
     private val viewModel by activityViewModels<AddScheduleViewModel>()
     private lateinit var scheduleDateAdapter :ScheduleDateAdapter
@@ -179,13 +176,13 @@ class CreateSchedule : BaseFragment<FragmentCreateScheduleBinding>(FragmentCreat
     }
 
 
-    override fun onItemClick(item: Area) {
-
-    }
-
     override fun onDayClick(position:Int,item: Schedule) {
         viewModel.activeDay.postValue(position)
         binding.vpScheduleFrame.currentItem = position
+    }
+
+    override fun onRemoveClick(item: Area) {
+
     }
 
 }

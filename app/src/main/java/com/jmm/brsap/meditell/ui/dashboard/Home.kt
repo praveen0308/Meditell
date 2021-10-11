@@ -89,7 +89,7 @@ class Home : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
         widgetList.add(
             WidgetModel(
                 NavigationEnum.DAILY_CALL_RECORDING,
-                "Daily Call Recording",
+                "Daily Doctor Call",
                 R.drawable.ic_daily_call_recording
             )
         )

@@ -13,7 +13,6 @@ import com.jmm.brsap.meditell.util.convertDMY2STD
 class ScheduleAdapter(private val mListener: ScheduleInterface) :
     RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
 
-
     private val mList = mutableListOf<Schedule>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
@@ -46,11 +45,9 @@ class ScheduleAdapter(private val mListener: ScheduleInterface) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            itemView.setOnClickListener {
-
+            binding.imageButton.setOnClickListener {
+                mListener.onEditClick(mList[adapterPosition])
             }
-
-
         }
 
         fun bind(item: Schedule) {
@@ -62,7 +59,8 @@ class ScheduleAdapter(private val mListener: ScheduleInterface) :
                     areas.append(area.second).append(",")
                 }*/
 //                tvAreas.text = areas.toString()
-                val selectedAreaAdapter = SelectedAreaAdapter()
+
+                val selectedAreaAdapter = AreaListAdapter()
                 rvAreas.apply {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(context)
@@ -74,7 +72,7 @@ class ScheduleAdapter(private val mListener: ScheduleInterface) :
     }
 
     interface ScheduleInterface {
-
+        fun onEditClick(item: Schedule)
     }
 
 

@@ -125,7 +125,6 @@
         <item name="android:textStyle">bold</item>
         <item name="textAllCaps">true</item>
 
-
     </style>
 
 </resources>

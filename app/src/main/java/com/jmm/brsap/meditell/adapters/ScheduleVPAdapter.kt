@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jmm.brsap.meditell.R
 import com.jmm.brsap.meditell.databinding.LayoutCurrentDateScheduleBinding
 import com.jmm.brsap.meditell.model.*
 
-class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitAdapter.CurrentDateAreaVisitInterface) :
+class ScheduleVPAdapter(val selectedAreaInterface: SelectedAreaAdapter.SelectedAreaInterface) :
     RecyclerView.Adapter<ScheduleVPAdapter.ScheduleVPViewHolder>() {
 
 
@@ -47,14 +46,12 @@ class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitA
             itemView.setOnClickListener {
 
             }
-
-
         }
 
         fun bind(item: Schedule) {
             binding.apply {
                 val currentDateAreaVisitAdapter =
-                    SelectedAreaAdapter()
+                    SelectedAreaAdapter(selectedAreaInterface)
                 rvCurrentDateSchedule.apply {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(context)
@@ -64,10 +61,6 @@ class ScheduleVPAdapter(val currentDateAreaVisitInterface: CurrentDateAreaVisitA
                 currentDateAreaVisitAdapter.setAreaList(item.scheduleAreas)
             }
         }
-    }
-
-    interface ScheduleVPInterface {
-
     }
 
 

@@ -50,10 +50,27 @@ class AreaRepository @Inject constructor(private val db:FirebaseFirestore) {
 
             Timber.d("New Area ID :$newAreaId")
             area.areaId = newAreaId
-            Timber.d("Area to be added : $area")
+            Timber.d("Area to be added : $area,in city ${area.cityId}")
             val response = db.collection(FirebaseDB.AREAS).document("$newAreaId").set(area)
             if (response.isSuccessful) emit(true)
             else emit(false)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun addNewCity(city:City): Flow<Int> {
+        return flow {
+            val lastAddedCity= db.collection(FirebaseDB.CITIES).orderBy("cityId",Query.Direction.DESCENDING).limit(1).get().await()
+            Timber.d("Last added city : ${lastAddedCity.documents}")
+            val cities = lastAddedCity.toObjects(City::class.java)
+            Timber.d("Converted into cities : $cities")
+            val newCityId = if (cities.isEmpty()) 1000 else cities[0].cityId!!+1
+
+            Timber.d("New City ID :$newCityId")
+            city.cityId = newCityId
+            Timber.d("City to be added : $city")
+            val response = db.collection(FirebaseDB.CITIES).document("$newCityId").set(city).await()
+            emit(newCityId)
+
         }.flowOn(Dispatchers.IO)
     }
 }

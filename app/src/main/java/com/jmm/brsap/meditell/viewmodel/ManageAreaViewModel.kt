@@ -83,4 +83,26 @@ class ManageAreaViewModel @Inject constructor(
                 }
         }
     }
+
+    private val _isAddedCity = MutableLiveData<Resource<Int>>()
+    val isAddedCity: LiveData<Resource<Int>> = _isAddedCity
+
+    fun addNewCity(city: City) {
+        viewModelScope.launch {
+            areaRepository
+                .addNewCity(city)
+                .onStart {
+                    _isAddedCity.postValue(Resource.Loading(true))
+                }
+                .catch { exception ->
+                    exception.message?.let {
+                        _isAddedCity.postValue(Resource.Error(it))
+                    }
+                }
+                .collect {
+                    _isAddedCity.postValue(Resource.Success(it))
+
+                }
+        }
+    }
 }
